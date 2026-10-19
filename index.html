@@ -1,0 +1,2869 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ScamSafe - Cybersecurity and AI Learning</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0e141b; --ink2:#17212c; --paper:#f4ecd8; --paper2:#e9dfc4; --line:#2b3a4a;
+  --rust:#e8642c; --teal:#2ec4b6; --gold:#f2b134; --red:#d7263d; --green:#2e9e5b; --muted:#6b6455;
+  --shadow:5px 5px 0 #000;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{font-size:100%}
+body{
+  margin:0;background:var(--ink);color:var(--paper);
+  font-family:'IBM Plex Sans',system-ui,sans-serif;line-height:1.55;min-height:100vh;
+  background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:32px 32px;
+}
+h1,h2,h3{font-family:'Archivo Black',Impact,sans-serif;font-weight:400;letter-spacing:.01em;margin:0 0 .4em;line-height:1.1}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+a{color:var(--teal)}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+
+/* scrolling tips at the top */
+.ticker{background:var(--rust);color:#111;overflow:hidden;white-space:nowrap;border-bottom:3px solid #000;font-family:'IBM Plex Mono',monospace;font-size:.85rem;font-weight:600}
+.ticker div{display:inline-block;padding:6px 0;animation:slide 45s linear infinite}
+.ticker span{margin:0 28px}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+
+header.top{display:flex;flex-wrap:wrap;align-items:center;gap:14px;padding:14px 22px;border-bottom:2px solid var(--line);background:var(--ink2)}
+.brand{display:flex;align-items:center;gap:12px;margin-right:auto}
+.brand svg{width:46px;height:46px;flex:none}
+.brand b{font-family:'Archivo Black';font-size:1.5rem;letter-spacing:.02em}
+.brand small{display:block;font-family:'IBM Plex Mono';font-size:.72rem;color:var(--teal);letter-spacing:.12em;text-transform:uppercase}
+.xpbox{display:flex;align-items:center;gap:10px;font-family:'IBM Plex Mono';font-size:.85rem}
+.bar{width:150px;height:14px;border:2px solid var(--paper);background:#000;position:relative}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--gold);width:0;transition:width .5s}
+.chip{background:var(--paper);color:var(--ink);border:2px solid #000;box-shadow:3px 3px 0 #000;padding:6px 12px;font-weight:600;border-radius:4px}
+.chip:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #000}
+
+
+nav.tabs{display:flex;flex-wrap:wrap;gap:8px;padding:14px 22px;background:var(--ink)}
+nav.tabs button{background:transparent;color:var(--paper);border:2px solid var(--line);border-radius:4px;padding:8px 14px;font-family:'IBM Plex Mono';font-size:.9rem}
+nav.tabs button:hover{border-color:var(--paper)}
+nav.tabs button[aria-selected=true]{background:var(--rust);color:#111;border-color:#000;box-shadow:3px 3px 0 #000;font-weight:600}
+.trackbar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:10px 22px;background:var(--ink2);border-bottom:1px solid var(--line);font-family:'IBM Plex Mono',monospace}
+.trackbar>span:first-child{font-size:.75rem;text-transform:uppercase;color:#9aa7a8}
+.track-switch{display:inline-flex;gap:4px;padding:4px;border:1px solid var(--line);border-radius:5px;background:#080d12}
+.track-switch button{border:0;border-radius:3px;background:transparent;color:var(--paper);padding:8px 12px;font-family:'IBM Plex Mono',monospace;font-size:.78rem;font-weight:600}
+.track-switch button[aria-selected=true]{background:var(--rust);color:#101419;box-shadow:0 0 12px color-mix(in srgb,var(--rust) 45%,transparent)}
+.trackbar #trackStatus{font-size:.74rem;color:#9aa7a8}
+body[data-track=ai]{
+  --ink:#07131c;--ink2:#0b202d;--paper:#e6f7ff;--paper2:#cceefa;--line:#176076;
+  --rust:#36d8e8;--teal:#80f2d3;--gold:#b5f36a;--muted:#436675;--shadow:5px 5px 0 #031018;
+  background-image:linear-gradient(rgba(54,216,232,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(54,216,232,.055) 1px,transparent 1px);
+  background-size:24px 24px
+}
+body[data-track=ai] .ticker{background:var(--gold)}
+body[data-track=ai] .track-switch button[aria-selected=true]{background:var(--rust);color:#05212b;box-shadow:0 0 14px rgba(54,216,232,.42)}
+body[data-track=ai] .paper{border-color:#176076;box-shadow:0 0 0 1px rgba(54,216,232,.45),0 0 18px rgba(54,216,232,.12)}
+body[data-track=ai] .paper::before{background:var(--gold);border-color:#176076}
+body[data-track=ai] .card{border-color:#176076;box-shadow:0 0 0 1px rgba(54,216,232,.3),4px 4px 0 #031018}
+body[data-track=ai] .card .num{color:#007d91}
+body[data-track=ai] .btn{box-shadow:3px 3px 0 var(--gold)}
+body[data-track=ai] .btn:hover{background:#092b38}
+.ai-kicker{font:600 .78rem 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#007d91}
+.ai-hero{border-left:8px solid #36d8e8;background:#d7f5fb;color:#07131c;padding:22px;margin:18px 0;box-shadow:5px 5px 0 #041c27}
+.ai-hero p:last-child{margin-bottom:0}
+.ai-signal{display:inline-block;border:1px solid #176076;padding:4px 8px;font:600 .72rem 'IBM Plex Mono',monospace;color:#075b6b;background:#c4f2e6}
+.ai-output{white-space:pre-wrap;overflow-wrap:anywhere;min-height:110px;background:#061820;color:#bff8ee;border:2px solid #36d8e8;padding:14px;font-family:'IBM Plex Mono',monospace}
+.ai-callout{border-left:5px solid #84cf43;background:#e4f8c8;color:#142512;padding:12px 16px;margin:14px 0}
+.demo-cta{border:3px solid var(--gold);background:var(--ink2);color:var(--paper);padding:18px;margin:18px 0;box-shadow:4px 4px 0 #000}
+.demo-cta h3{color:var(--gold)}
+.demo-cta p:last-child{margin-bottom:0}
+.creator-note{border-left:5px solid var(--rust);padding:10px 14px;background:rgba(255,255,255,.06);margin:18px 0}
+.ai-choice{display:block;width:100%;text-align:left;background:#effbff;color:#07131c;border:2px solid #176076;border-radius:4px;padding:12px 14px;margin:8px 0}
+.ai-choice:hover:not(:disabled){background:#ccf4f4}
+.ai-choice.correct{background:#dff7c7;border-color:#4a8b23}
+.ai-choice.incorrect{background:#f7dadd;border-color:#ac3745}
+body[data-track=ai] .trackbar{background:#081a25;border-color:#176076}
+nav.tabs button.lock::after,.card .lk::before{
+  content:"";display:inline-block;width:10px;height:12px;margin-left:7px;vertical-align:-1px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 12'%3E%3Crect y='5' width='10' height='7' rx='1.5' fill='%23f2b134'/%3E%3Cpath d='M2.5 5V3.5a2.5 2.5 0 0 1 5 0V5' fill='none' stroke='%23f2b134' stroke-width='1.6'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+
+main{max-width:1050px;margin:0 auto;padding:10px 22px 70px}
+section{display:none}
+section.on{display:block;animation:fade .3s}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.filetag{font-family:'IBM Plex Mono';color:var(--teal);font-size:.8rem;letter-spacing:.18em;text-transform:uppercase}
+.lead{max-width:62ch;color:#cfc7b0}
+
+
+.paper{background:var(--paper);color:var(--ink);border:3px solid #000;box-shadow:var(--shadow);border-radius:6px;padding:20px;margin:16px 0;position:relative}
+.paper::before{content:"";position:absolute;top:-3px;left:22px;width:70px;height:12px;background:var(--gold);border:2px solid #000;border-top:none}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.card{background:var(--paper);color:var(--ink);border:3px solid #000;box-shadow:var(--shadow);border-radius:6px;padding:18px;display:flex;flex-direction:column;gap:8px;transition:transform .15s}
+.card:hover{transform:translate(-2px,-2px) rotate(-.4deg)}
+.card .num{font-family:'IBM Plex Mono';font-weight:600;color:var(--rust);font-size:.8rem;letter-spacing:.15em}
+.card .lk{font-size:.75rem;color:var(--muted);margin-left:8px;letter-spacing:0}
+.card p{margin:0;color:#3a362b;flex:1}
+.btn{background:var(--ink);color:var(--paper);border:2px solid #000;border-radius:4px;padding:10px 16px;font-weight:600;box-shadow:3px 3px 0 var(--rust);text-decoration:none;display:inline-block}
+.btn:hover{background:#000}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--rust)}
+.btn.alt{background:var(--paper2);color:var(--ink);box-shadow:3px 3px 0 #000}
+.btn.good{background:var(--green);color:#fff;box-shadow:3px 3px 0 #000}
+.btn.bad{background:var(--red);color:#fff;box-shadow:3px 3px 0 #000}
+.btn:disabled{opacity:.5;cursor:default}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.profile-layout{display:grid;grid-template-columns:minmax(240px,.8fr) minmax(300px,1.2fr);gap:16px;align-items:start}
+.profile-avatar{width:132px;height:132px;border:3px solid #000;border-radius:50%;background:var(--paper2);display:grid;place-items:center;overflow:hidden;margin:0 0 16px;box-shadow:4px 4px 0 var(--rust)}
+.profile-avatar img{width:100%;height:100%;object-fit:cover}
+.profile-avatar span{font:1.6rem 'Archivo Black';color:var(--ink)}
+.profile-note{font-size:.8rem;color:var(--muted)}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.profile-status{min-height:1.5em;font-size:.9rem;font-weight:600}
+body[data-track=ai] .profile-avatar{border-color:#176076;box-shadow:0 0 18px rgba(54,216,232,.35)}
+
+
+.badges{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0}
+.stamp{width:104px;height:104px;border:3px dashed var(--paper);border-radius:50%;display:grid;place-items:center;text-align:center;font-family:'IBM Plex Mono';font-size:.7rem;padding:10px;opacity:.35;transform:rotate(-6deg)}
+.stamp b{display:block;font-family:'Archivo Black';font-size:.95rem;font-weight:400;line-height:1.05}
+.stamp.got{opacity:1;border-color:var(--gold);color:var(--gold);box-shadow:0 0 0 3px var(--ink),0 0 0 5px var(--gold)}
+.stamp:nth-child(even){transform:rotate(5deg)}
+
+
+/* fake email */
+.mail{border:2px solid #000;background:#fff;color:#222;border-radius:4px;overflow:hidden}
+.mail .hd{background:#e8e8e8;padding:10px 14px;border-bottom:2px solid #000;font-size:.9rem}
+.mail .hd div{margin:2px 0}
+.mail .bd{padding:16px 18px}
+.hot{cursor:pointer;border-bottom:2px dotted #888}
+.hot:hover{background:#fff2b3}
+.hot.found{background:#ffd5d5;border-bottom:2px solid var(--red)}
+.note{background:var(--ink);color:var(--paper);border-left:6px solid var(--gold);padding:10px 14px;margin:10px 0;font-size:.95rem;border-radius:3px}
+.flagbox{display:grid;gap:6px;margin-top:10px}
+.flagbox div{font-size:.9rem;background:#0002;padding:6px 10px;border-left:4px solid var(--red)}
+.flagbox div.fine{border-color:var(--green)}
+
+
+/* link inspector */
+.urlview{font-family:'IBM Plex Mono';font-size:1.05rem;background:#000;color:#aaa;padding:14px;border-radius:4px;overflow-wrap:anywhere;border:2px solid var(--line)}
+.urlview .p{color:#7f8c97}.urlview .s{color:var(--gold)}.urlview .d{color:#2ee27a;font-weight:600;background:#0a2c18;padding:0 3px}.urlview .r{color:#ccc}
+input[type=text],input[type=search],input[type=password],input[type=date],input:not([type]),select,textarea{
+  width:100%;font:inherit;padding:12px 14px;border:3px solid #000;border-radius:4px;background:#fff;color:#111;display:block;margin-top:4px;
+}
+input[type=text],input[type=search]{font-family:'IBM Plex Mono',monospace}
+textarea{min-height:120px;resize:vertical}
+input[type=checkbox],input[type=radio]{width:22px;height:22px;accent-color:var(--green);margin:0;display:inline-block}
+.field{display:block;margin:12px 0}
+.birth-field{border:0;padding:0;margin:14px 0 8px}
+.birth-field legend{font-weight:600;padding:0}
+.birth-selects{display:grid;grid-template-columns:1.2fr .8fr 1fr;gap:8px}
+.birth-selects label span{display:block;font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--muted)}
+.birth-selects select{margin-top:3px}
+.age-note{font-size:.78rem;color:var(--muted);margin:6px 0}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.85rem;margin:8px 0;font-family:'IBM Plex Mono'}
+.legend span::before{content:"■ "}
+.legend .s::before{color:var(--gold)}.legend .d::before{color:#2ee27a}.legend .p::before{color:#7f8c97}
+
+
+/* password lab */
+.meter{height:20px;border:3px solid #000;background:#ddd;margin:10px 0;position:relative}
+.meter i{position:absolute;inset:0 auto 0 0;width:0;transition:width .3s,background .3s}
+.facts{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-top:10px}
+.facts div{background:var(--paper2);border:2px solid #000;padding:10px;border-radius:4px}
+.facts b{display:block;font-family:'Archivo Black';font-weight:400;font-size:1.25rem}
+.facts span{font-size:.8rem;color:var(--muted);font-family:'IBM Plex Mono'}
+
+
+/* quiz and scenarios */
+.msg{background:#fff;border:2px solid #000;padding:16px;border-radius:4px;font-size:1.08rem;position:relative}
+.msg .from{font-family:'IBM Plex Mono';font-size:.8rem;color:var(--rust);font-weight:600;margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.chips button{background:var(--paper2);color:var(--ink);border:2px solid #000;border-radius:20px;padding:4px 14px;font-weight:600}
+.chips button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
+.choice{display:block;width:100%;text-align:left;background:#fff;border:2px solid #000;border-radius:4px;padding:12px 14px;margin:8px 0;box-shadow:3px 3px 0 #000}
+.choice:hover:not(:disabled){background:#fff2b3}
+.choice.right{background:#bfe8cd}.choice.wrong{background:#f5b9bf}
+.fb{margin-top:10px;padding:12px 14px;border-radius:4px;border:2px solid #000}
+.fb.ok{background:#d6f0de}.fb.no{background:#fbd4d8}
+
+
+/* checklists, recovery steps */
+.check{display:flex;gap:12px;align-items:flex-start;padding:12px 4px;border-bottom:1px dashed #9a916d;cursor:pointer}
+.check input{flex:none;margin-top:2px;width:26px;height:26px}
+.check small{display:block;color:#554f3e}
+.check.done b{text-decoration:line-through;opacity:.6}
+.check.done span{opacity:.7}
+
+
+/* check-up */
+.q{border:0;border-bottom:1px dashed #9a916d;margin:0;padding:12px 0}
+.q legend{font-weight:600;padding:0;margin-bottom:6px}
+.q label{display:inline-flex;align-items:center;gap:8px;margin-right:20px;min-height:40px;cursor:pointer}
+
+
+/* message check */
+mark{background:#ffd966;color:var(--ink);padding:0 2px;border-radius:2px;border-bottom:2px solid var(--rust)}
+.hl{white-space:pre-wrap;background:#fff;border:2px solid #000;border-radius:4px;padding:14px;margin:10px 0}
+.v-bad{color:var(--red)}.v-warn{color:#b47400}.v-ok{color:var(--green)}
+
+
+/* pause card */
+.pcard{background:var(--ink2);color:var(--paper);border:3px solid #000;box-shadow:var(--shadow);border-radius:8px;padding:22px;min-height:290px;max-width:520px;position:relative}
+.pcard::after{content:"";position:absolute;inset:7px;border:2px dashed var(--gold);border-radius:5px;pointer-events:none}
+.pcard h3{color:var(--gold);font-size:1.5rem}
+.pcard ol{padding-left:20px;margin:0 0 12px}
+.pcard .who{background:var(--paper);color:var(--ink);border-radius:4px;padding:8px 12px;font-size:.92rem}
+.pcard .who div{display:flex;justify-content:space-between;gap:10px;padding:2px 0}
+
+
+/* misc text bits */
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px dashed #9a916d;vertical-align:top}
+dt{font-weight:600;font-family:'IBM Plex Mono';color:var(--rust)}
+dd{margin:0 0 12px}
+.season{border-left:6px solid #9a916d;padding:4px 0 4px 14px;margin:14px 0}
+.season.now{border-color:var(--rust)}
+.season h3{margin-bottom:.15em}
+.tag{display:inline-block;background:var(--gold);border:2px solid #000;border-radius:4px;padding:0 8px;font:600 .75rem 'IBM Plex Mono';margin-left:8px;vertical-align:middle}
+.err{background:#fbd4d8;border-left:6px solid var(--red);padding:8px 12px;margin:10px 0;font-weight:600;border-radius:3px}
+
+
+/* login popup */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.72);display:grid;place-items:center;padding:16px;z-index:50;overflow:auto}
+.modal .box{width:100%;max-width:430px;margin:0}
+.modal .x{position:absolute;top:8px;right:10px;background:none;border:0;font-size:2rem;line-height:1;color:var(--ink);padding:4px 10px}
+
+
+.toast{position:fixed;right:18px;bottom:18px;background:var(--gold);color:#111;border:3px solid #000;box-shadow:var(--shadow);padding:12px 16px;border-radius:4px;font-weight:600;transform:translateY(120px);visibility:hidden;transition:transform .3s,visibility .3s;z-index:60;max-width:80vw}
+.toast.show{transform:none;visibility:visible}
+.badge-celebration{position:fixed;inset:0;background:rgba(0,0,0,.82);display:grid;place-items:center;padding:20px;z-index:70}
+.badge-celebration .panel{width:min(100%,440px);text-align:center;background:var(--paper);color:var(--ink);border:4px solid #000;box-shadow:8px 8px 0 var(--gold);padding:30px;border-radius:8px;animation:badge-pop .55s cubic-bezier(.2,1.6,.4,1)}
+.badge-celebration .medal{font-size:4rem;line-height:1;margin-bottom:12px;animation:medal-spin .8s ease-out}
+.badge-celebration h2{color:var(--rust)}
+@keyframes badge-pop{from{opacity:0;transform:scale(.65) translateY(24px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes medal-spin{from{transform:rotate(-35deg) scale(.5)}to{transform:rotate(0) scale(1)}}
+footer{text-align:center;padding:30px;color:#7f8c97;font-family:'IBM Plex Mono';font-size:.8rem}
+
+
+@media (max-width:600px){
+  header.top,nav.tabs,main,.trackbar{padding-left:14px;padding-right:14px}
+  .bar{width:90px}
+  .trackbar #trackStatus{width:100%}
+  .birth-selects{grid-template-columns:1fr 1fr}
+  .birth-selects label:last-child{grid-column:1/-1}
+  .profile-layout{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{
+  body *{visibility:hidden}
+  #cardprint,#cardprint *{visibility:visible}
+  #cardprint{position:absolute;left:0;top:0}
+  .pcard{box-shadow:none;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+
+<div class="ticker" aria-hidden="true"><div id="tick"></div></div>
+
+
+<header class="top">
+  <div class="brand">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4 56 13v18c0 15-10 25-24 29C18 56 8 46 8 31V13z" fill="#e8642c" stroke="#000" stroke-width="4" stroke-linejoin="round"/><path d="M32 12 48 18v13c0 10-6 17-16 21-10-4-16-11-16-21V18z" fill="#0e141b"/><rect x="24" y="29" width="16" height="13" rx="2" fill="#f2b134"/><path d="M27 29v-4a5 5 0 0 1 10 0v4" fill="none" stroke="#f2b134" stroke-width="3"/></svg>
+    <div><b>ScamSafe</b><small>Free scam-spotting training</small></div>
+  </div>
+  <div class="xpbox" id="xpbox" hidden><span id="lvl"></span><div class="bar" title="Experience"><i id="xpbar"></i></div><span id="xp"></span></div>
+  <button class="chip" id="size" aria-label="Change text size">Aa Text size</button>
+  <button class="chip" id="loginBtn">Log in</button>
+</header>
+
+
+<div class="trackbar">
+  <span>Learning path</span>
+  <div class="track-switch" role="tablist" aria-label="Choose a learning path">
+    <button type="button" role="tab" data-track="cyber" aria-selected="true">CYBERSECURITY</button>
+    <button type="button" role="tab" data-track="ai" aria-selected="false">AI ACADEMY</button>
+  </div>
+  <span id="trackStatus">Security lessons and scam practice</span>
+</div>
+<nav class="tabs" role="tablist" id="tabs"></nav>
+
+
+<main>
+
+
+<section id="home" class="on">
+  <p class="filetag">// About Us &amp; Start Here</p>
+  <h1 style="font-size:clamp(2rem,6vw,3.6rem)">Scammers are good at their job.<br><span style="color:var(--rust)">Get better at yours.</span></h1>
+  
+  <div class="paper" style="background:var(--paper2);border-color:#000;margin-bottom:24px;">
+    <h3 style="color:var(--ink);">Hello and welcome to ScamSafe!</h3>
+    <p>We are <strong>Akshath Bathe Balaji</strong>, <strong>Inba Jeyakumar</strong>, and <strong>Ruthreash Pradeep</strong>, a trio of first-year students taking cybersecurity at the Alliance Academy for Innovation.</p>
+    <p>We created ScamSafe since we saw that a growing issue existed—the faster technology develops, the more people, particularly older individuals, become susceptible to sophisticated cyber scams. We decided to take action on it.</p>
+    <p>That's how we came up with ScamSafe, an interactive educational platform with easy-to-understand videos and quizzes. However, we didn't want it to seem like another boring educational site. We included a points system and a printable certificate which you receive once you've finished your lessons to motivate/engage people to make learning more fun!</p>
+  </div>
+
+
+  <p class="lead">Short, hands-on lessons for everybody: grandparents, students, people who work from home. Click around, try things, get it wrong where it's safe, and learn the tricks before a real scammer tries them on you.</p>
+  <p class="lead" id="homeNote"></p>
+  <div class="paper">
+    <h2>Try a free mini-lesson</h2>
+    <p>Practice spotting a suspicious email. Finish the demo, then decide whether you want a free account to save progress and unlock the rest.</p>
+    <button class="btn" data-go="phish">Start the 2-minute demo</button>
+  </div>
+  <div class="grid" id="modcards"></div>
+  <div id="stampArea">
+    <h2 style="margin-top:34px">Your stamps</h2>
+    <p class="lead">Earn badges by practicing. Create a free account after the demo to keep XP and badges when you return.</p>
+    <div class="badges" id="badges"></div>
+  </div>
+</section>
+
+
+<section id="aiHome">
+  <p class="filetag">// AI Academy / Start Here</p>
+  <span class="ai-signal">LEARN THE SYSTEM. KEEP THE JUDGMENT.</span>
+  <h1 style="font-size:clamp(2rem,6vw,3.6rem);margin-top:14px">Think clearly<br><span style="color:#00879b">with artificial intelligence.</span></h1>
+  <div class="ai-hero">
+    <p class="ai-kicker">AI is a tool, not an authority</p>
+    <p>Learn how generative AI works, how to ask better questions, and how to check what it gives you. Practice here is local: your prompts stay in this page and are not sent to an AI service.</p>
+  </div>
+  <div class="creator-note"><b>Who made ScamSafe?</b><br>Akshath Bathe Balaji, Inba Jeyakumar, and Ruthreash Pradeep are first-year cybersecurity students at the Alliance Academy for Innovation. They built ScamSafe together to make practical digital-safety and AI learning approachable, hands-on, and useful in everyday life.</div>
+  <p class="lead">Build practical AI literacy: understand the limits, protect your information, and keep a human in charge of important decisions.</p>
+  <div class="paper">
+    <p class="mono">FREE 2-MINUTE TRIAL</p>
+    <h2>Start with one small win</h2>
+    <p>Explore three AI concepts. No account needed. When you finish, create a free account to unlock the full academy and keep your progress.</p>
+    <button class="btn" data-go="aiBasics">Try AI basics</button>
+  </div>
+  <div class="grid">
+    <div class="card"><span class="num">MODULE 01 · FREE DEMO</span><h3>AI, in plain language</h3><p>Learn what a language model predicts and why confident answers can still be wrong.</p><button class="btn" data-go="aiBasics">Try the lesson</button></div>
+    <div class="card"><span class="num">MODULE 02</span><h3>Prompt lab</h3><p>Shape a clear request with context, audience, format, and boundaries.</p><button class="btn" data-go="aiLab">Build a prompt</button></div>
+    <div class="card"><span class="num">MODULE 03</span><h3>Human in the loop</h3><p>Practice checking facts, protecting private data, and spotting high-stakes uses.</p><button class="btn" data-go="aiCheck">Take the challenge</button></div>
+    <div class="card"><span class="num">MODULE 04</span><h3>Source check</h3><p>Run a short claim-audit drill and choose what evidence to verify.</p><button class="btn" data-go="aiVerify">Start source check</button></div>
+    <div class="card"><span class="num">MODULE 05</span><h3>AI media &amp; deepfakes</h3><p>Check suspicious images, voices, and videos without trusting a single clue.</p><button class="btn" data-go="aiMedia">Investigate media</button></div>
+    <div class="card"><span class="num">MODULE 06</span><h3>Privacy &amp; fairness</h3><p>Decide what information to share and how to spot unfair AI-assisted decisions.</p><button class="btn" data-go="aiPrivacy">Protect people</button></div>
+    <div class="card"><span class="num">MODULE 07</span><h3>Choose the right AI task</h3><p>Decide when AI can help, when to verify, and when a person should lead.</p><button class="btn" data-go="aiTasks">Play the task picker</button></div>
+    <div class="card"><span class="num">MODULE 08</span><h3>Improve an AI answer</h3><p>Turn a vague or risky answer into something clearer, checkable, and safer.</p><button class="btn" data-go="aiQuality">Practice quality checks</button></div>
+  </div>
+  <div class="paper" id="aiBadgeArea">
+    <h2>AI Academy badge board</h2>
+    <p>Every badge comes from a practical skill—not just clicking through.</p>
+    <div class="badges" id="aiBadges"></div>
+  </div>
+  <div class="paper"><h3>Three operating rules</h3><ol><li>Check important claims against reliable sources.</li><li>Never paste passwords, private records, or someone else's sensitive information into an AI tool.</li><li>Use AI to support your thinking, not to make high-impact decisions for you.</li></ol></div>
+</section>
+
+
+<section id="aiBasics">
+  <p class="filetag">// AI Academy / Module 01</p>
+  <h1>AI, in plain language</h1>
+  <p class="lead">Generative AI creates likely next pieces of text, images, audio, or code from patterns learned during training. It does not automatically know whether an answer is true.</p>
+  <div class="paper">
+    <h3>What is happening?</h3>
+    <p>A language model receives your prompt and predicts a sequence of tokens that fits the patterns it learned. It can be useful at summarizing, drafting, translating, and brainstorming.</p>
+    <p>That process is not the same as checking a live source or reasoning like a person. A model can make up a citation, miss recent events, reflect bias in its data, or misunderstand your request.</p>
+    <div class="ai-callout"><b>Remember:</b> fluent wording is not evidence. Ask for sources, then open and verify the sources yourself.</div>
+  </div>
+  <div class="paper">
+    <h3>Tap a concept to reveal its field note</h3>
+    <div class="row"><button class="btn alt" data-ai-reveal="training">Training data</button><button class="btn alt" data-ai-reveal="hallucination">Hallucination</button><button class="btn alt" data-ai-reveal="bias">Bias</button></div>
+    <p id="aiConceptNote" class="mono" aria-live="polite">Choose a concept to inspect it.</p>
+  </div>
+  <div class="demo-cta" id="aiDemoSignup" hidden>
+    <h3>Nice work—you finished the free AI demo.</h3>
+    <p>Create a free account to save your first badge and unlock the prompt lab, deepfake practice, source checks, and more.</p>
+    <button class="btn" type="button" data-signup>Create my free account</button>
+  </div>
+</section>
+
+
+<section id="aiLab">
+  <p class="filetag">// AI Academy / Module 02</p>
+  <h1>Prompt lab</h1>
+  <p class="lead">A useful prompt gives a goal, enough context, and a clear shape for the answer. This builder creates practice text only; it does not contact an AI model.</p>
+  <div class="paper">
+    <label class="field"><b>What do you want help with?</b><input id="aiGoal" placeholder="Example: explain how solar panels work"></label>
+    <label class="field"><b>Who is the answer for?</b><input id="aiAudience" placeholder="Example: a curious middle-school student"></label>
+    <label class="field"><b>What format would help?</b><select id="aiFormat"><option value="a short explanation with an example">Short explanation + example</option><option value="five bullet points">Five bullet points</option><option value="a step-by-step guide">Step-by-step guide</option><option value="a comparison table">Comparison table</option></select></label>
+    <label class="field"><b>Any boundary or check?</b><input id="aiBoundary" placeholder="Example: define technical words and flag uncertainty"></label>
+    <div class="row"><button class="btn" id="aiBuild">Build prompt</button><button class="btn alt" id="aiCopy" disabled>Copy prompt</button></div>
+  </div>
+  <div class="paper"><h3>Your practice prompt</h3><pre id="aiPromptOutput" class="ai-output" aria-live="polite">Your prompt will appear here.</pre><p class="ai-callout">Do not include passwords, private account details, confidential work, or identifying information about another person.</p></div>
+</section>
+
+
+<section id="aiCheck">
+  <p class="filetag">// AI Academy / Module 03</p>
+  <h1>Human in the loop</h1>
+  <p class="lead">Pick the safest next step. The goal is to use AI thoughtfully, not to trust or fear it blindly.</p>
+  <div class="paper" id="aiQuestion"></div>
+</section>
+
+
+<section id="aiVerify">
+  <p class="filetag">// AI Academy / Module 04</p>
+  <h1>Source check</h1>
+  <p class="lead">An AI answer includes a precise claim and a convincing citation. Choose the best next step before relying on it.</p>
+  <div class="paper" id="aiVerifyBox"></div>
+</section>
+
+<section id="aiMedia">
+  <p class="filetag">// AI Academy / Module 05</p>
+  <h1>AI media &amp; deepfakes</h1>
+  <p class="lead">Generated or edited media can look and sound convincing. A clip is a reason to verify a claim, not proof that the claim is real.</p>
+  <div class="paper">
+    <h3>Three checks before you share</h3>
+    <ol><li>Find the earliest available version and check who published it.</li><li>Look for independent reporting or an official statement.</li><li>Do not rely on visual glitches alone; real media can look strange and fakes can look polished.</li></ol>
+    <p class="ai-callout">If a clip requests money, codes, or urgent action, contact the person using a number or channel you already trust.</p>
+  </div>
+  <div class="paper" id="aiMediaBox"></div>
+</section>
+
+<section id="aiPrivacy">
+  <p class="filetag">// AI Academy / Module 06</p>
+  <h1>Privacy &amp; fairness</h1>
+  <p class="lead">AI tools may retain prompts, reflect gaps in their training data, or make mistakes about people. Share less, question outputs, and keep consequential decisions accountable to people.</p>
+  <div class="paper">
+    <h3>A safer way to experiment</h3>
+    <ul><li>Use fictional examples instead of real names, account details, or private records.</li><li>Check your school or workplace rules before using an AI tool for its information.</li><li>Ask who could be harmed if an AI output is wrong or unfair.</li></ul>
+  </div>
+  <div class="paper" id="aiPrivacyBox"></div>
+</section>
+
+<section id="aiTasks">
+  <p class="filetag">// AI Academy / Module 07</p>
+  <h1>Choose the right AI task</h1>
+  <p class="lead">AI is most useful when the task is low-risk, the inputs are safe to share, and a person can check the result. Practice choosing the right tool for the job.</p>
+  <div class="paper"><h3>A quick decision filter</h3><ol><li>Could a wrong answer harm someone or affect a major decision?</li><li>Would using AI expose private information or break a rule?</li><li>Can you check the result before using it?</li></ol><p>If the risk is high, use a qualified person and trusted sources—not automation alone.</p></div>
+  <div class="paper" id="aiTasksBox"></div>
+</section>
+
+<section id="aiQuality">
+  <p class="filetag">// AI Academy / Module 08</p>
+  <h1>Improve an AI answer</h1>
+  <p class="lead">Good AI use is a loop: ask clearly, inspect the result, verify important details, and revise. A polished answer is still only a draft.</p>
+  <div class="paper"><h3>The answer-check routine</h3><ul><li><b>Specific:</b> Does it answer the actual question?</li><li><b>Supported:</b> Can you verify facts, names, numbers, and sources?</li><li><b>Safe:</b> Is private information protected, and could the result unfairly affect someone?</li><li><b>Useful:</b> Is the format clear for the person who needs it?</li></ul></div>
+  <div class="paper" id="aiQualityBox"></div>
+</section>
+
+
+<section id="phish">
+  <p class="filetag">// Case file 01</p>
+  <h1>Spot the Phish</h1>
+  <p class="lead">Click anything in the message that looks off. Look at the sender, the greeting, the pressure and the links. This free practice demo takes about two minutes.</p>
+  <div class="row" id="phishPick"></div>
+  <div class="paper">
+    <div class="mail"><div class="hd" id="mailhd"></div><div class="bd" id="mailbd"></div></div>
+    <div class="row" style="margin-top:12px"><b id="phishScore" class="mono"></b><button class="btn alt" id="reveal">Show me all of them</button></div>
+    <div class="flagbox" id="flags"></div>
+    <div class="note" id="phishNote">Tap the underlined parts.</div>
+  </div>
+  <div class="demo-cta" id="cyberDemoSignup" hidden>
+    <h3>You spotted the warning signs.</h3>
+    <p>Create a free account to save your progress and unlock the full cybersecurity training path.</p>
+    <button class="btn" type="button" data-signup>Create my free account</button>
+  </div>
+</section>
+
+
+<section id="links">
+  <p class="filetag">// Case file 02</p>
+  <h1>Link Inspector</h1>
+  <p class="lead">The part of a web address that tells you who owns it is the end of the name, right before the first single slash. Everything in front of that can be made up by anyone. Paste a link to see it taken apart.</p>
+  <div class="paper">
+    <label for="urlin"><b>Try a link:</b></label>
+    <input type="text" id="urlin" placeholder="https://secure-login.northbridge-bank.co/verify?id=442" autocomplete="off" spellcheck="false">
+    <div class="legend"><span class="p">Protocol</span><span class="s">Subdomain (anyone can make these up)</span><span class="d">The real owner</span></div>
+    <div class="urlview" id="urlout">Type or paste a link above.</div>
+    <div class="flagbox" id="urlflags"></div>
+  </div>
+  <div class="paper">
+    <h3>Real or fake?</h3>
+    <div class="msg"><div class="from" id="lkcount"></div><div class="mono" id="lkurl" style="font-size:1.1rem;overflow-wrap:anywhere"></div></div>
+    <div class="row" style="margin-top:10px"><button class="btn good" data-lk="real">This looks REAL</button><button class="btn bad" data-lk="fake">This looks FAKE</button></div>
+    <div id="lkfb"></div>
+  </div>
+</section>
+
+
+<section id="message">
+  <p class="filetag">// Case file 03</p>
+  <h1>Message Check</h1>
+  <p class="lead">Paste a text, email or voicemail transcript. It highlights the usual tricks: pressure, secrecy, threats and payments that can't be undone. Nothing leaves your device.</p>
+  <div class="paper">
+    <label for="msgin"><b>Paste it here</b></label>
+    <textarea id="msgin" placeholder="Paste the message"></textarea>
+    <div class="row" style="margin-top:10px"><button class="btn alt" id="msgsample">Try an example</button><button class="btn alt" id="msgclear">Clear</button></div>
+  </div>
+  <div class="paper" id="msgout" hidden>
+    <h2 id="msghead" style="margin-bottom:.1em"></h2>
+    <p id="msgsub"></p>
+    <div class="hl" id="msghl"></div>
+    <div class="flagbox" id="msgfinds"></div>
+    <p style="font-size:.85rem;color:var(--muted)">This only looks for common patterns. It can't tell who really sent something. If anyone is asking for money or codes, call a number you already trust before doing anything.</p>
+  </div>
+</section>
+
+
+<section id="pass">
+  <p class="filetag">// Case file 04</p>
+  <h1>Password Lab</h1>
+  <p class="lead">Type a password to see how long a computer might need to guess it. It all stays on your device, but still, test one that's similar to yours instead of the real thing.</p>
+  <div class="paper">
+    <label for="pw"><b>Test a password</b></label>
+    <input type="text" id="pw" placeholder="try: Summer2024!" autocomplete="off" spellcheck="false">
+    <div class="meter"><i id="pwbar"></i></div>
+    <div class="facts">
+      <div><span>Verdict</span><b id="pwv">-</b></div>
+      <div><span>Time to crack*</span><b id="pwt">-</b></div>
+      <div><span>Length</span><b id="pwl">0</b></div>
+    </div>
+    <div id="pwtips" class="flagbox"></div>
+    <p style="font-size:.8rem;color:var(--muted)">*Guess based on a fast offline attack, 10 billion tries a second.</p>
+  </div>
+  <div class="paper">
+    <h3>Make a passphrase</h3>
+    <p>Four random words are long, strong and easy to remember. Picture a silly scene with the words in it and you'll hold on to it.</p>
+    <div class="mono" id="phrase" style="font-size:1.4rem;margin:8px 0"></div>
+    <button class="btn" id="gen">Make another</button>
+  </div>
+</section>
+
+
+<section id="quiz">
+  <p class="filetag">// Case file 05</p>
+  <h1>Scam or Safe?</h1>
+  <p class="lead">Pick who you want to practice for.</p>
+  <div class="chips" id="qfilter"></div>
+  <div class="paper" id="qbox"></div>
+</section>
+
+
+<section id="cyberDrill">
+  <p class="filetag">// Cybersecurity / Rapid response</p>
+  <h1>Security sprint</h1>
+  <p class="lead">Three quick situations. Pick the first move that reduces risk, then see why it helps.</p>
+  <div class="paper" id="cyberDrillBox"></div>
+</section>
+
+
+<section id="scen">
+  <p class="filetag">// Case file 06</p>
+  <h1>What Would You Do?</h1>
+  <p class="lead">Real situations, no timer. Pick what you'd do and see how it plays out.</p>
+  <div class="paper" id="sbox"></div>
+</section>
+
+
+<section id="list">
+  <p class="filetag">// Case file 07</p>
+  <h1>Protect Yourself</h1>
+  <p class="lead">Tick things off as you do them. Your ticks are saved to your account.</p>
+  <div class="chips" id="cfilter"></div>
+  <div class="paper"><b id="cprog" class="mono"></b><div id="clist"></div></div>
+</section>
+
+
+<section id="checkup">
+  <p class="filetag">// Case file 08</p>
+  <h1>Security Check-up</h1>
+  <p class="lead">Answer honestly, nobody's grading you. You get a short to-do list with the changes that matter most at the top.</p>
+  <div class="paper" id="cuq"></div>
+  <div class="paper" id="cuout" hidden></div>
+</section>
+
+
+<section id="recovery">
+  <p class="filetag">// Case file 09</p>
+  <h1>If It Already Happened</h1>
+  <p class="lead">It happens to careful people all the time. Pick what happened and go through the steps in order. Sooner is better, but it's never too late to start.</p>
+  <div class="chips" id="pbpick"></div>
+  <div class="paper" id="pbout" hidden></div>
+</section>
+
+
+<section id="card">
+  <p class="filetag">// Case file 10</p>
+  <h1>Pause Card</h1>
+  <p class="lead">A little card with three rules and the people to call. Print it and keep it by the phone. Don't put passwords or your family safe word on it.</p>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(290px,1fr))">
+    <div class="paper" style="margin:0">
+      <label class="field"><b>Your first name (optional)</b><input id="cdName" maxlength="24"></label>
+      <label class="field"><b>First person to call</b><input id="cdA" maxlength="28"></label>
+      <label class="field"><b>Their number</b><input id="cdAp" maxlength="20" inputmode="tel"></label>
+      <label class="field"><b>Second person to call</b><input id="cdB" maxlength="28"></label>
+      <label class="field"><b>Their number</b><input id="cdBp" maxlength="20" inputmode="tel"></label>
+      <label class="field"><b>Bank fraud line (back of your card)</b><input id="cdF" maxlength="20" inputmode="tel"></label>
+      <button class="btn" id="cdPrint">Print the card</button>
+    </div>
+    <div id="cardprint">
+      <div class="pcard">
+        <h3>Pause before you pay<span id="pcName"></span></h3>
+        <ol><li>Hang up. Call back on a number I already know.</li><li>No gift cards, wires or crypto for anyone who contacted me.</li><li>Talk to someone I trust first.</li></ol>
+        <div class="who"><div><b>Call first:</b><span id="pcA"></span></div><div><b>Then:</b><span id="pcB"></span></div><div><b>Bank fraud line:</b><span id="pcF"></span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="lookout">
+  <p class="filetag">// Case file 11</p>
+  <h1>Scam Calendar</h1>
+  <p class="lead">Scams follow the calendar. These are the ones that tend to pop up at different times of year, with whatever's in season right now at the top.</p>
+  <div class="paper" id="lookall"></div>
+</section>
+
+
+<section id="workshop">
+  <p class="filetag">// Case file 12</p>
+  <h1>Workshop Kit</h1>
+  <p class="lead">Teaching this to your family, a senior center or a school club? Here's a 45 minute plan, and a log for writing down what confused people so you can fix it.</p>
+  <div class="paper">
+    <h3>45 minute plan</h3>
+    <table>
+      <tr><th>Minutes</th><th>What to do</th><th>Use</th></tr>
+      <tr><td>0-5</td><td>Say hi. One rule: nobody shares real passwords or numbers.</td><td>-</td></tr>
+      <tr><td>5-15</td><td>Put the fake email on screen and let the group shout out red flags.</td><td>Spot the Phish</td></tr>
+      <tr><td>15-25</td><td>Everyone checks a link from their own texts and email.</td><td>Link Inspector</td></tr>
+      <tr><td>25-35</td><td>Fill in a Pause Card to take home.</td><td>Pause Card</td></tr>
+      <tr><td>35-42</td><td>Bring a suspicious message and check it together.</td><td>Message Check</td></tr>
+      <tr><td>42-45</td><td>Ask what was confusing and write it down below.</td><td>Feedback log</td></tr>
+    </table>
+    <h3 style="margin-top:20px">Tips</h3>
+    <ul><li>Sit next to people, not in front of them. Let them hold the device.</li><li>One idea at a time. Skip the jargon.</li><li>Praise people for being careful. Never make anyone feel dumb for getting fooled.</li><li>Bring printed Pause Cards and a pen.</li></ul>
+  </div>
+  <div class="paper">
+    <h3>Feedback log</h3>
+    <p style="font-size:.9rem;color:var(--muted)">Write what you saw, not who it was. Don't put names or personal details of the people you taught.</p>
+    <form id="logForm">
+      <div class="grid" style="gap:0 16px">
+        <label class="field"><b>Date</b><input type="date" id="lgDate" required></label>
+        <label class="field"><b>Age group</b><select id="lgGroup"><option>Under 18</option><option>18 to 39</option><option>40 to 64</option><option selected>65 and over</option></select></label>
+        <label class="field"><b>Device</b><select id="lgDev"><option>Phone</option><option>Tablet</option><option>Computer</option></select></label>
+        <label class="field"><b>Tool they tried</b><select id="lgTool"></select></label>
+        <label class="field"><b>How easy? (1 hard, 5 easy)</b><select id="lgEase"><option>1</option><option>2</option><option>3</option><option selected>4</option><option>5</option></select></label>
+      </div>
+      <label class="field"><b>Where did they get stuck?</b><textarea id="lgStuck" style="min-height:80px"></textarea></label>
+      <label class="field"><b>What will you change?</b><textarea id="lgFix" style="min-height:80px"></textarea></label>
+      <button class="btn">Add to log</button>
+    </form>
+    <div id="logout" style="margin-top:18px;overflow-x:auto"></div>
+  </div>
+</section>
+
+
+<section id="help">
+  <p class="filetag">// Case file 13</p>
+  <h1>Help &amp; Glossary</h1>
+  <div class="paper" style="background:#fde2e0">
+    <h3>Think you got scammed? Start here.</h3>
+    <ol>
+      <li>Stop talking to them. Don't call back.</li>
+      <li>Call your bank or card company and tell them.</li>
+      <li>Change your passwords, email first.</li>
+      <li>Write down names, numbers, dates and amounts.</li>
+      <li>Report it (links below) and tell someone you trust. It happens to smart people every day.</li>
+    </ol>
+    <div class="row">
+      <a class="btn" href="https://reportfraud.ftc.gov" target="_blank" rel="noopener">Report to the FTC</a>
+      <a class="btn alt" href="https://www.ic3.gov" target="_blank" rel="noopener">FBI IC3</a>
+      <a class="btn alt" href="https://www.identitytheft.gov" target="_blank" rel="noopener">Identity theft help</a>
+      <a class="btn alt" href="tel:18333728311">Elder Fraud Hotline 1-833-372-8311</a>
+    </div>
+    <p style="font-size:.8rem">Double check these are still current before you rely on them. If you're in danger right now, call 911.</p>
+  </div>
+  <div class="paper">
+    <h3>Protect a phone or computer</h3>
+    <p><b>ScamSafe is a learning website, not a firewall.</b> A webpage cannot inspect or block attacks across your phone, remove malware, or guarantee that a device is safe. Use the built-in protections from your device maker and mobile carrier.</p>
+    <ul>
+      <li>Install operating-system and app updates from Settings or the official app store. Do not install an update from a pop-up, text, or caller.</li>
+      <li>Use a screen lock, a unique email password, and multi-factor authentication. Never approve a sign-in prompt you did not start or share its code.</li>
+      <li>Remove apps you do not recognize. Review device administrator, accessibility, VPN, and configuration-profile settings for access you did not grant.</li>
+      <li>Back up important files regularly. Install apps only from the official store and review requested permissions.</li>
+    </ul>
+    <h3>If you think a device is compromised</h3>
+    <ol>
+      <li>Stop using it for banking, shopping, and password changes. Do not follow instructions from the caller or pop-up.</li>
+      <li>From a different trusted device, secure your email first, change reused passwords, and sign out other sessions where available.</li>
+      <li>Call your carrier from a trusted phone if service suddenly stops or you suspect a SIM swap. Contact your bank if payment or account details may be exposed.</li>
+      <li>Ask the device maker or a trusted repair professional for help. Avoid unknown “cleaner” apps and do not factory-reset before considering safe backups and evidence.</li>
+    </ol>
+    <p>If there is immediate danger, use another phone to contact emergency services.</p>
+  </div>
+  <div class="paper">
+    <h3>Glossary</h3>
+    <input type="search" id="gsearch" placeholder="Search a word, like 'phishing'">
+    <dl id="gloss" style="margin-top:14px"></dl>
+  </div>
+</section>
+
+
+<section id="account">
+  <p class="filetag">// Your account</p>
+  <h1 id="acctName"></h1>
+  <div class="profile-layout">
+    <div class="paper">
+      <div class="profile-avatar"><img id="profileAvatarImg" alt="Your profile photo" hidden><span id="profileAvatarInitials">SS</span></div>
+      <label class="btn alt" for="profilePhoto">Take or choose photo</label>
+      <input class="visually-hidden" id="profilePhoto" type="file" accept="image/*" capture="user">
+      <button class="btn alt" id="removeProfilePhoto" type="button" hidden>Remove photo</button>
+      <p class="profile-note">Your photo is resized and stored in your private Supabase account storage.</p>
+      <div id="acctInfo"></div>
+      <div style="margin-top:16px"><button class="btn alt" id="logoutBtn">Log out</button></div>
+    </div>
+    <form class="paper" id="profileForm">
+      <h2>Edit profile</h2>
+      <label class="field"><b>Display name</b><input id="profileDisplayName" maxlength="40" autocomplete="nickname"></label>
+      <label class="field"><b>Phone number (optional)</b><input id="profilePhone" type="tel" autocomplete="tel" inputmode="tel" maxlength="25"></label>
+      <label class="field"><b>About me (optional)</b><textarea id="profileBio" maxlength="240" placeholder="A few words about you"></textarea></label>
+      <label class="field"><b>Age range</b><select id="profileAgeGroup"><option value="prefer_not_to_say">Prefer not to say</option><option value="under_18">Under 18</option><option value="18_to_39">18 to 39</option><option value="40_to_64">40 to 64</option><option value="65_plus">65 and over</option></select></label>
+      <label class="field"><b>Gender</b><select id="profileGender"><option value="prefer_not_to_say">Prefer not to say</option><option value="female">Female</option><option value="male">Male</option><option value="another_identity">Another identity</option></select></label>
+      <p class="profile-note">Display name, phone number, bio, age range, and gender are saved to your Supabase account. The phone number is not verified. Do not include sensitive personal details.</p>
+      <div id="profileStatus" class="profile-status" aria-live="polite"></div>
+      <button class="btn" id="saveProfile" type="submit">Save profile</button>
+    </form>
+  </div>
+  <div class="paper" style="background:#fde2e0">
+    <h3>Account and learning data</h3>
+    <p>Your sign-in and learning progress are saved to your Supabase account, so XP, badges, and lesson answers follow you when you sign in on another device. A local browser copy is also kept as a backup.</p>
+    <p>Older progress already in this browser is only imported after you approve the one-time import prompt.</p>
+    <button class="btn alt" id="importProgressBtn" type="button" hidden>Import saved browser progress</button>
+    <p>To delete your cloud account, use the site administrator's verified account-deletion process.</p>
+  </div>
+</section>
+
+
+</main>
+
+
+<footer>ScamSafe - made by students, for everyone. Create a free account to sync progress across devices; your browser keeps a backup.</footer>
+
+
+<div class="modal" id="modal" hidden>
+  <div class="paper box" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <button class="x" id="mClose" aria-label="Close">&times;</button>
+    <h2 id="mTitle">Log in to keep going</h2>
+    <p id="mWhy" style="margin-top:0"></p>
+    <div class="chips" style="margin-top:0">
+      <button id="tabIn" aria-pressed="true" type="button">Log in</button>
+      <button id="tabUp" aria-pressed="false" type="button">Create account</button>
+    </div>
+    <form id="authForm" novalidate>
+      <label class="field"><b>Email address</b><input id="authEmail" type="email" autocomplete="email" inputmode="email" required></label>
+      <label class="field" id="authUsernameRow" hidden><b>Choose a username</b><input id="authUsername" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="20"></label>
+      <div id="authProfileRow" hidden>
+        <label class="field"><b>Phone number (optional)</b><input id="authPhone" type="tel" autocomplete="tel" inputmode="tel" maxlength="25"></label>
+        <p class="age-note">Your phone number is saved as account metadata and is not verified or used for sign-in.</p>
+        <fieldset class="birth-field">
+          <legend>Date of birth</legend>
+          <div class="birth-selects">
+            <label><span>Month</span><select id="birthMonth" aria-label="Birth month"><option value="">Month</option></select></label>
+            <label><span>Day</span><select id="birthDay" aria-label="Birth day"><option value="">Day</option></select></label>
+            <label><span>Year</span><select id="birthYear" aria-label="Birth year"><option value="">Year</option></select></label>
+          </div>
+          <p id="ageGroupPreview" class="age-note" aria-live="polite">Choose your birth date to calculate your age range.</p>
+        </fieldset>
+        <label class="field"><b>Gender (optional)</b><select id="authGender"><option value="prefer_not_to_say">Prefer not to say</option><option value="female">Female</option><option value="male">Male</option><option value="another_identity">Another identity</option></select></label>
+        <p class="age-note">Your exact birth date stays in this form and is not sent or saved. ScamSafe sends only your age range and optional gender choice to Supabase.</p>
+        <label class="field"><span><input id="progressConsent" type="checkbox"> I agree to sync my XP, badges, lesson answers, and workshop log to my ScamSafe account so I can keep my progress across devices. Existing progress for this username may be included.</span></label>
+      </div>
+      <label class="field" id="authCodeRow" hidden><b>Email code</b><input id="authCode" inputmode="numeric" autocomplete="one-time-code" maxlength="8" pattern="[0-9]{6,8}"></label>
+      <div class="err" id="autherr" hidden></div>
+      <button class="btn" id="authgo" type="submit" style="width:100%">Send verification code</button>
+      <button class="btn alt" id="authResend" type="button" style="width:100%;margin-top:12px" hidden>Send a new code</button>
+    </form>
+    <p style="font-size:.8rem;color:var(--muted);margin-bottom:0">Check the newest ScamSafe email and enter its 6- to 8-digit code here. Never share your code with anyone.</p>
+  </div>
+</div>
+
+<div class="badge-celebration" id="badgeCelebration" role="dialog" aria-modal="true" aria-labelledby="badgeCelebrationTitle" hidden>
+  <div class="panel">
+    <div class="medal" aria-hidden="true">🏅</div>
+    <p class="mono">ACHIEVEMENT UNLOCKED</p>
+    <h2 id="badgeCelebrationTitle">Badge earned!</h2>
+    <p id="badgeCelebrationText"></p>
+    <button class="btn" id="badgeCelebrationClose" type="button">Keep learning</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+
+<script>
+const $ = (s, root = document) => root.querySelector(s);
+const $$ = (s, root = document) => [...root.querySelectorAll(s)];
+
+
+function esc(str) {
+  return String(str).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+
+function shuffle(list) {
+  const a = [...list];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+
+const backup = {};
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch (e) { return k in backup ? backup[k] : null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch (e) { backup[k] = v; } },
+  del(k) { try { localStorage.removeItem(k); } catch (e) { delete backup[k]; } }
+};
+function getJSON(k, fallback) {
+  try { const v = store.get(k); return v ? JSON.parse(v) : fallback; } catch (e) { return fallback; }
+}
+
+
+let toastTimer;
+function toast(text) {
+  const t = $('#toast');
+  t.textContent = text;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+
+// ---------- Supabase email verification ----------
+const SUPABASE_URL = 'https://cjbyogxbzmmwoeburefs.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_3n6ewXvFUCKJ6a2dtijXwQ_MFE7wA6G';
+const hasSupabaseConfig = SUPABASE_URL.startsWith('https://') && SUPABASE_PUBLISHABLE_KEY.length > 20;
+let supabasePromise;
+
+async function getSupabase() {
+  if (!hasSupabaseConfig) throw new Error('Add your Supabase project URL and publishable key near the top of the script first.');
+  if (!supabasePromise) {
+    supabasePromise = import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm')
+      .then(({ createClient }) => createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY))
+      .catch(error => { supabasePromise = null; throw error; });
+  }
+  return supabasePromise;
+}
+
+
+// ---------- user data ----------
+let me = null;
+let accountEmail = '';
+let activeSupabaseUser = null;
+let hasProfilePhoto = false;
+const emptyProfile = () => ({ display_name: '', bio: '' });
+let localProfile = emptyProfile();
+
+
+const emptyData = () => ({ xp: 0, got: {}, checkup: {}, ticks: {}, steps: {}, card: {}, log: [], joined: Date.now() });
+let S = emptyData();
+const completedDemos = new Set();
+
+function normalizeProgress(data) {
+  const base = emptyData();
+  if (!data || typeof data !== 'object' || Array.isArray(data)) return base;
+  const record = value => value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+  return {
+    xp: Number.isFinite(Number(data.xp)) && Number(data.xp) >= 0 ? Number(data.xp) : 0,
+    got: record(data.got),
+    checkup: record(data.checkup),
+    ticks: record(data.ticks),
+    steps: record(data.steps),
+    card: record(data.card),
+    log: Array.isArray(data.log) ? data.log : [],
+    joined: Number.isFinite(Number(data.joined)) && Number(data.joined) > 0 ? Number(data.joined) : base.joined
+  };
+}
+
+function mergeProgress(local, cloud) {
+  const localData = normalizeProgress(local);
+  const cloudData = normalizeProgress(cloud);
+  const mergedLog = [...cloudData.log, ...localData.log];
+  const uniqueLog = [...new Map(mergedLog.map(entry => [JSON.stringify(entry), entry])).values()];
+  return {
+    ...cloudData,
+    xp: Math.max(localData.xp, cloudData.xp),
+    got: { ...localData.got, ...cloudData.got },
+    checkup: { ...localData.checkup, ...cloudData.checkup },
+    ticks: { ...localData.ticks, ...cloudData.ticks },
+    steps: { ...localData.steps, ...cloudData.steps },
+    card: { ...localData.card, ...cloudData.card },
+    log: uniqueLog,
+    joined: Math.min(localData.joined, cloudData.joined)
+  };
+}
+
+function hasSavedProgress(data) {
+  const progress = normalizeProgress(data);
+  return progress.xp > 0 || Object.keys(progress.got).length > 0 || Object.keys(progress.ticks).length > 0
+    || Object.keys(progress.checkup).length > 0 || Object.keys(progress.steps).length > 0
+    || progress.log.length > 0 || Object.values(progress.card).some(Boolean);
+}
+
+
+function loadData() {
+  S = normalizeProgress(getJSON('cc_data_' + me, {}));
+  localProfile = Object.assign(emptyProfile(), getJSON('cc_profile_' + me, {}));
+}
+let progressSyncTimer = null;
+let progressSyncPromise = Promise.resolve();
+let lastProgressSyncErrorAt = 0;
+
+function saveData() {
+  if (!me) return;
+  store.set('cc_data_' + me, JSON.stringify(S));
+  if (!activeSupabaseUser) return;
+  clearTimeout(progressSyncTimer);
+  progressSyncTimer = setTimeout(() => {
+    syncProgressNow().catch(error => {
+      const now = Date.now();
+      if (now - lastProgressSyncErrorAt > 10000) {
+        toast('Progress is saved in this browser, but cloud sync failed: ' + (error.message || 'Try again later.'));
+        lastProgressSyncErrorAt = now;
+      }
+    });
+  }, 700);
+}
+
+async function syncProgressNow() {
+  clearTimeout(progressSyncTimer);
+  if (!activeSupabaseUser) return;
+  const userId = activeSupabaseUser.id;
+  const progress = normalizeProgress(S);
+  progressSyncPromise = progressSyncPromise.catch(() => {}).then(async () => {
+    if (!activeSupabaseUser || activeSupabaseUser.id !== userId) return;
+    const supabase = await getSupabase();
+    const { error } = await supabase.from('user_progress').upsert({
+      user_id: userId,
+      progress,
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'user_id' });
+    if (error) throw error;
+  });
+  return progressSyncPromise;
+}
+
+async function loadCloudProgress(user) {
+  const pendingImportKey = 'cc_unimported_progress_' + user.id;
+  const hasPendingImport = !!store.get(pendingImportKey);
+  const local = normalizeProgress(getJSON(hasPendingImport ? pendingImportKey : 'cc_data_' + me, {}));
+  const importedKey = 'cc_progress_imported_' + user.id;
+  const alreadyReviewed = store.get(importedKey) === 'true';
+  const supabase = await getSupabase();
+  const { data, error } = await supabase.from('user_progress').select('progress').eq('user_id', user.id).maybeSingle();
+  if (error) throw error;
+  const cloud = data?.progress ? normalizeProgress(data.progress) : null;
+  let chosen = cloud || emptyData();
+  if (hasPendingImport) {
+    chosen = cloud || emptyData();
+  } else if (hasSavedProgress(local) && !alreadyReviewed) {
+    const consentedAtSignup = user.user_metadata?.progress_sync_consent === true;
+    const importLocal = consentedAtSignup || window.confirm(
+      'Import the learning progress already saved in this browser to your ScamSafe account? This includes XP, badges, answers, and workshop log entries.'
+    );
+    if (importLocal) {
+      chosen = mergeProgress(local, cloud || emptyData());
+      store.del(pendingImportKey);
+    } else {
+      store.set(pendingImportKey, JSON.stringify(local));
+      chosen = cloud || emptyData();
+    }
+    store.set(importedKey, 'true');
+  } else if (cloud) {
+    chosen = mergeProgress(local, cloud);
+  } else if (hasSavedProgress(local)) {
+    chosen = local;
+  }
+  if (!alreadyReviewed) {
+    store.set(importedKey, 'true');
+  }
+  S = normalizeProgress(chosen);
+  store.set('cc_data_' + me, JSON.stringify(S));
+  await syncProgressNow();
+}
+
+
+const LEVELS = ['Rookie', 'Watcher', 'Guardian', 'Sentinel', 'Architect', 'Legend'];
+function levelNow() { return Math.min(Math.floor(S.xp / 100), LEVELS.length - 1); }
+
+
+function award(id, xp, msg) {
+  if (!me || S.got[id]) return;
+  S.got[id] = 1;
+  S.xp += xp;
+  saveData();
+  drawXP();
+  drawStamps();
+  if (xp > 0) toast('+' + xp + ' XP: ' + msg);
+  const badge = STAMPS.find(item => item[0] === id);
+  if (badge) showBadgeCelebration(badge);
+}
+
+function awardCompletedDemos() {
+  if (completedDemos.has('aiBasics')) {
+    for (const concept of ['training', 'hallucination', 'bias']) {
+      award('aiNote-' + concept, 5, 'AI concept explored');
+    }
+    award('aiBasicsBadge', 20, 'AI basics explored');
+  }
+  if (completedDemos.has('cyberPhish')) award('phish0', 10, 'found every red flag in the demo email');
+  completedDemos.clear();
+}
+
+function showBadgeCelebration(badge) {
+  $('#badgeCelebrationTitle').textContent = badge[1] + ' ' + badge[2] + ' badge earned!';
+  $('#badgeCelebrationText').textContent = badge[3] + '. Keep practicing to earn more XP.';
+  $('#badgeCelebration').hidden = false;
+  $('#badgeCelebrationClose').focus();
+}
+
+function closeBadgeCelebration() { $('#badgeCelebration').hidden = true; }
+$('#badgeCelebrationClose').addEventListener('click', closeBadgeCelebration);
+$('#badgeCelebration').addEventListener('click', event => {
+  if (event.target.id === 'badgeCelebration') closeBadgeCelebration();
+});
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && !$('#badgeCelebration').hidden) closeBadgeCelebration();
+});
+
+
+function drawXP() {
+  $('#xpbox').hidden = !me;
+  if (!me) return;
+  $('#lvl').textContent = 'LVL ' + (levelNow() + 1) + ' - ' + LEVELS[levelNow()];
+  $('#xp').textContent = S.xp + ' XP';
+  $('#xpbar').style.width = (S.xp % 100) + '%';
+}
+
+
+// ---------- pages + tabs ----------
+const CYBER_PAGES = [
+  ['home', 'Home', false],
+  ['phish', 'Phish demo', false],
+  ['links', 'Links', true],
+  ['message', 'Message check', true],
+  ['pass', 'Passwords', true],
+  ['quiz', 'Quiz', true],
+  ['cyberDrill', 'Security sprint', true],
+  ['scen', 'Scenarios', true],
+  ['list', 'Checklists', true],
+  ['checkup', 'Check-up', true],
+  ['recovery', 'If it happened', true],
+  ['card', 'Pause card', true],
+  ['lookout', 'Calendar', true],
+  ['workshop', 'Workshop', true],
+  ['help', 'Help', false]
+];
+const AI_PAGES = [
+  ['aiHome', 'AI overview', false],
+  ['aiBasics', 'AI basics demo', false],
+  ['aiLab', 'Prompt lab', true],
+  ['aiCheck', 'Human in the loop', true],
+  ['aiVerify', 'Source check', true],
+  ['aiMedia', 'AI media', true],
+  ['aiPrivacy', 'Privacy & fairness', true],
+  ['aiTasks', 'Choose an AI task', true],
+  ['aiQuality', 'Improve an answer', true]
+];
+let activeTrack = 'cyber';
+const currentPages = () => activeTrack === 'ai' ? AI_PAGES : CYBER_PAGES;
+const isLocked = id => (currentPages().find(p => p[0] === id) || [])[2];
+
+
+let here = 'home';
+let wanted = null;
+
+
+function drawTabs() {
+  $('#tabs').innerHTML = currentPages().map(([id, label, locked]) => {
+    const isLck = locked && !me;
+    return `<button role="tab" data-t="${id}" class="${isLck ? 'lock' : ''}" aria-selected="${id === here}">${esc(label)}</button>`;
+  }).join('');
+}
+
+
+function updateTrackUI() {
+  document.body.dataset.track = activeTrack;
+  $$('[data-track]').forEach(b => b.setAttribute('aria-selected', b.dataset.track === activeTrack));
+  $('#trackStatus').textContent = activeTrack === 'ai'
+    ? 'AI literacy, prompt practice, and responsible use'
+    : 'Security lessons and scam practice';
+  drawTabs();
+  renderTicker();
+}
+
+
+function showPage(id) {
+  here = id;
+  updateTrackUI();
+  $$('main section').forEach(s => s.classList.toggle('on', s.id === id));
+  $$('#tabs button').forEach(b => b.setAttribute('aria-selected', b.dataset.t === id));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (id === 'lookout') drawLookout();
+  if (id === 'workshop') drawLog();
+  if (id === 'account') drawAccount();
+  if (id === 'aiCheck') drawAIQuestion();
+  if (id === 'aiVerify') drawAIVerify();
+  if (id === 'cyberDrill') drawCyberDrill();
+}
+
+
+function route() {
+  let id = location.hash.replace(/^#\/?/, '') || 'home';
+  const targetTrack = AI_PAGES.some(p => p[0] === id) ? 'ai' : (id === 'account' ? activeTrack : 'cyber');
+  if (targetTrack !== activeTrack) activeTrack = targetTrack;
+  if (!currentPages().some(p => p[0] === id) && id !== 'account') id = activeTrack === 'ai' ? 'aiHome' : 'home';
+  if (id === 'account' && !me) id = 'home';
+  if (isLocked(id) && !me) {
+    wanted = id;
+    location.hash = '#/' + here;
+    openLogin(id);
+    return;
+  }
+  showPage(id);
+}
+window.addEventListener('hashchange', route);
+
+
+$('#tabs').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if (b) location.hash = '#/' + b.dataset.t;
+});
+$$('.track-switch [data-track]').forEach(b => b.addEventListener('click', () => {
+  const destination = b.dataset.track === 'ai' ? 'aiHome' : 'home';
+  if (location.hash === '#/' + destination) route();
+  else location.hash = '#/' + destination;
+}));
+document.addEventListener('click', e => {
+  const g = e.target.closest('[data-go]');
+  if (g) location.hash = '#/' + g.dataset.go;
+  if (e.target.closest('[data-signup]')) openSignup();
+});
+
+
+// ---------- login popup ----------
+let mode = 'in';
+let otpSent = false;
+let pendingEmail = '';
+
+
+function setMode(m) {
+  mode = m;
+  otpSent = false;
+  pendingEmail = '';
+  $('#authEmail').readOnly = false;
+  $('#authUsername').readOnly = false;
+  $('#tabIn').setAttribute('aria-pressed', m === 'in');
+  $('#tabUp').setAttribute('aria-pressed', m === 'up');
+  $('#mTitle').textContent = m === 'up' ? 'Create your free account' : 'Log in to keep going';
+  $('#authUsernameRow').hidden = m !== 'up';
+  $('#authProfileRow').hidden = m !== 'up';
+  $('#progressConsent').checked = false;
+  $('#progressConsent').disabled = false;
+  $('#authCodeRow').hidden = true;
+  $('#authCode').value = '';
+  $('#authResend').hidden = true;
+  $('#authgo').textContent = 'Send verification code';
+  showErr('');
+}
+function showErr(text) {
+  const e = $('#autherr');
+  e.textContent = text;
+  e.hidden = !text;
+}
+
+
+function openLogin(forPage) {
+  const name = forPage ? (currentPages().find(p => p[0] === forPage) || [])[1] : '';
+  $('#mWhy').textContent = name
+    ? 'You need an account to use ' + name + '. It saves your points and answers, and it\'s free.'
+    : 'Log in to save your points and answers.';
+  setMode('in');
+  $('#modal').hidden = false;
+  $('#authEmail').focus();
+}
+function openSignup() {
+  wanted = null;
+  openLogin();
+  setMode('up');
+  $('#mTitle').textContent = 'Create your free account';
+  $('#mWhy').textContent = 'Save your progress and unlock every lesson in both learning paths.';
+}
+function showDemoSignup(id) {
+  const panel = $('#' + id);
+  if (panel && !me) panel.hidden = false;
+}
+function closeLogin() {
+  $('#modal').hidden = true;
+  wanted = null;
+  otpSent = false;
+  pendingEmail = '';
+  $('#authEmail').readOnly = false;
+  $('#authUsername').readOnly = false;
+  $('#authProfileRow').hidden = true;
+  $('#authCode').value = '';
+  $('#authCodeRow').hidden = true;
+  $('#authResend').hidden = true;
+}
+
+
+$('#loginBtn').onclick = () => { if (me) location.hash = '#/account'; else openLogin(); };
+$('#mClose').onclick = closeLogin;
+$('#modal').addEventListener('click', e => { if (e.target.id === 'modal') closeLogin(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#modal').hidden) closeLogin(); });
+$('#tabIn').onclick = () => setMode('in');
+$('#tabUp').onclick = () => setMode('up');
+$('#authResend').onclick = () => requestEmailCode(true);
+
+
+const birthMonthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+for (const [index, month] of birthMonthNames.entries()) $('#birthMonth').add(new Option(month, String(index + 1)));
+for (let year = new Date().getFullYear(); year >= new Date().getFullYear() - 120; year--) $('#birthYear').add(new Option(String(year), String(year)));
+for (let day = 1; day <= 31; day++) $('#birthDay').add(new Option(String(day), String(day)));
+
+
+function updateAgePreview() {
+  const month = Number($('#birthMonth').value);
+  const day = Number($('#birthDay').value);
+  const year = Number($('#birthYear').value);
+  if (!month || !day || !year) {
+    $('#ageGroupPreview').textContent = 'Choose your birth date to calculate your age range.';
+    return null;
+  }
+  const today = new Date();
+  const birthDate = new Date(year, month - 1, day);
+  if (birthDate.getFullYear() !== year || birthDate.getMonth() !== month - 1 || birthDate.getDate() !== day || birthDate > today) {
+    $('#ageGroupPreview').textContent = 'Choose a valid date that is not in the future.';
+    return null;
+  }
+  let age = today.getFullYear() - year;
+  if (today.getMonth() < month - 1 || (today.getMonth() === month - 1 && today.getDate() < day)) age--;
+  if (age > 120) {
+    $('#ageGroupPreview').textContent = 'Choose a valid birth date.';
+    return null;
+  }
+  const ageGroup = age < 18 ? 'under_18' : age < 40 ? '18_to_39' : age < 65 ? '40_to_64' : '65_plus';
+  const displayGroup = age < 18 ? 'Under 18' : age < 40 ? '18 to 39' : age < 65 ? '40 to 64' : '65 and over';
+  $('#ageGroupPreview').textContent = 'Age: ' + age + ' · age range: ' + displayGroup;
+  return ageGroup;
+}
+
+
+function updateBirthDays() {
+  const month = Number($('#birthMonth').value);
+  const year = Number($('#birthYear').value) || new Date().getFullYear();
+  const oldDay = Number($('#birthDay').value);
+  const days = month ? new Date(year, month, 0).getDate() : 31;
+  $('#birthDay').replaceChildren(new Option('Day', ''));
+  for (let day = 1; day <= days; day++) $('#birthDay').add(new Option(String(day), String(day)));
+  if (oldDay && oldDay <= days) $('#birthDay').value = String(oldDay);
+  updateAgePreview();
+}
+$('#birthMonth').addEventListener('change', updateBirthDays);
+$('#birthYear').addEventListener('change', updateBirthDays);
+$('#birthDay').addEventListener('change', updateAgePreview);
+
+
+function getSignupProfile() {
+  const ageGroup = updateAgePreview();
+  if (!ageGroup) {
+    showErr('Choose a valid month, day, and year to continue.');
+    return null;
+  }
+  return { age_group: ageGroup, gender: $('#authGender').value };
+}
+
+
+async function activateUser(user) {
+  let name = String(user.user_metadata?.username || '').trim().toLowerCase();
+  if (!/^[a-z0-9_]{3,20}$/.test(name)) {
+    const supabase = await getSupabase();
+    const { data, error } = await supabase.from('profiles').select('username').eq('id', user.id).single();
+    if (error) throw error;
+    name = String(data.username || '').trim().toLowerCase();
+  }
+  if (!/^[a-z0-9_]{3,20}$/.test(name)) throw new Error('This account has no valid username. Contact the site administrator for help.');
+  const go = wanted;
+  me = name;
+  accountEmail = user.email || '';
+  activeSupabaseUser = user;
+  loadData();
+  let progressWarning = '';
+  try {
+    await loadCloudProgress(user);
+  } catch (error) {
+    progressWarning = 'Cloud progress could not be loaded. Your browser backup is available: ' + (error.message || 'Check Supabase setup.');
+  }
+  awardCompletedDemos();
+  closeLogin();
+  refreshAll();
+  toast(progressWarning || 'Signed in as ' + name);
+  if (go) location.hash = '#/' + go;
+}
+
+
+async function requestEmailCode(resend = false) {
+  showErr('');
+  const email = (otpSent ? pendingEmail : $('#authEmail').value).trim().toLowerCase();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('Enter a valid email address.'); return; }
+  const name = $('#authUsername').value.trim().toLowerCase();
+  if (mode === 'up' && !/^[a-z0-9_]{3,20}$/.test(name)) {
+    showErr('Usernames must be 3 to 20 letters, numbers or underscores.');
+    return;
+  }
+  const phoneNumber = $('#authPhone').value.trim();
+  const phoneDigits = phoneNumber.replace(/\D/g, '');
+  if (mode === 'up' && phoneNumber && (!/^\+?[0-9\s().-]{7,25}$/.test(phoneNumber) || phoneDigits.length < 7 || phoneDigits.length > 15)) {
+    showErr('Enter a valid phone number or leave the phone field blank.');
+    return;
+  }
+  const signupProfile = mode === 'up' ? getSignupProfile() : null;
+  if (mode === 'up' && !signupProfile) return;
+  if (mode === 'up' && !$('#progressConsent').checked) {
+    showErr('Please agree to account progress sync to create an account.');
+    return;
+  }
+  const btn = resend ? $('#authResend') : $('#authgo');
+  btn.disabled = true;
+  const originalText = btn.textContent;
+  btn.textContent = 'Sending...';
+  try {
+    const supabase = await getSupabase();
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        shouldCreateUser: mode === 'up',
+        ...(mode === 'up' ? { data: { username: name, display_name: name, phone_number: phoneNumber, progress_sync_consent: true, ...signupProfile } } : {})
+      }
+    });
+    if (error) throw error;
+    pendingEmail = email;
+    otpSent = true;
+    $('#authEmail').value = email;
+    $('#authEmail').readOnly = true;
+    $('#authUsername').readOnly = true;
+    $('#progressConsent').disabled = true;
+    $('#authCodeRow').hidden = false;
+    $('#authCode').focus();
+    $('#authgo').textContent = 'Verify code';
+    $('#authResend').hidden = false;
+    toast('Verification code sent to ' + email);
+  } catch (error) {
+    showErr(error.message || 'Could not send the code. Check your Supabase setup and try again.');
+  } finally {
+    btn.disabled = false;
+    if (resend) btn.textContent = originalText;
+    else if (!otpSent) btn.textContent = originalText;
+  }
+}
+
+
+$('#authForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  if (!otpSent) { await requestEmailCode(); return; }
+  showErr('');
+  const token = $('#authCode').value.trim();
+  if (!/^\d{6,8}$/.test(token)) { showErr('Enter the 6- to 8-digit code from your email.'); return; }
+  const btn = $('#authgo');
+  btn.disabled = true;
+  btn.textContent = 'Checking code...';
+  try {
+    const supabase = await getSupabase();
+    const { data, error } = await supabase.auth.verifyOtp({ email: pendingEmail, token, type: 'email' });
+    if (error) throw error;
+    if (!data.user) throw new Error('The code was accepted, but no account was returned. Try again.');
+    await activateUser(data.user);
+  } catch (error) {
+    showErr(error.message || 'That code could not be verified. Check it and try again.');
+  } finally {
+    btn.disabled = false;
+    if (!$('#modal').hidden) btn.textContent = 'Verify code';
+  }
+});
+
+
+async function restoreSupabaseSession() {
+  if (!hasSupabaseConfig) return;
+  try {
+    const supabase = await getSupabase();
+    const { data, error } = await supabase.auth.getSession();
+    if (error) throw error;
+    if (data.session?.user) await activateUser(data.session.user);
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_OUT' || !session) {
+        me = null;
+        accountEmail = '';
+        activeSupabaseUser = null;
+        S = emptyData();
+        localProfile = emptyProfile();
+        refreshAll();
+        if (here === 'account') showPage('home');
+      }
+    });
+  } catch (error) {
+    toast('Could not restore your Supabase session: ' + (error.message || 'Check your connection and Supabase setup.'));
+  }
+}
+
+
+async function logOut() {
+  try {
+    await syncProgressNow();
+  } catch (error) {
+    const message = error.message || 'The latest progress could not reach Supabase.';
+    if (!window.confirm(message + ' Your browser backup is still available. Sign out anyway?')) return;
+  }
+  try {
+    const supabase = await getSupabase();
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
+  } catch (error) {
+    toast(error.message || 'Could not sign out. Try again.');
+    return;
+  }
+  me = null;
+  accountEmail = '';
+  activeSupabaseUser = null;
+  S = emptyData();
+  localProfile = emptyProfile();
+  refreshAll();
+  location.hash = '#/home';
+  showPage('home');
+}
+
+
+function refreshAll() {
+  $('#loginBtn').textContent = me ? me : 'Log in';
+  $('#homeNote').textContent = me ? '' : 'Try a free cybersecurity or AI lesson first. Create a free account afterward to save progress and unlock every training module.';
+  drawTabs();
+  drawXP();
+  drawStamps();
+  drawCards();
+  drawChecklist();
+  drawCheckup();
+  drawCardForm();
+  $('#aiDemoSignup').hidden = true;
+  $('#cyberDemoSignup').hidden = true;
+}
+
+
+// ---------- text size ----------
+let sizeStep = +(store.get('cc_size') || 0);
+function applySize() { document.documentElement.style.fontSize = ['100%', '115%', '130%'][sizeStep % 3]; }
+$('#size').onclick = () => { sizeStep = (sizeStep + 1) % 3; applySize(); store.set('cc_size', sizeStep); };
+applySize();
+
+
+// ---------- ticker + home cards ----------
+const TIPS = [
+  'Real banks never ask you to move money to a "safe account"',
+  'Urgency is the scammer\'s favorite tool',
+  'Gift cards are for gifts, not for paying someone who called you',
+  'Hover before you click',
+  'Use a different password for email than for everything else',
+  'If a stranger asks you to keep a secret, tell someone',
+  'Turn on 2-step sign-in',
+  'A prize you never entered is not a prize'
+];
+const AI_TIPS = [
+  'AI output is a draft, not proof',
+  'Never paste passwords or private records into a chatbot',
+  'Give prompts a goal, context, audience and format',
+  'Open and check sources before trusting a claim',
+  'Keep a person responsible for important decisions',
+  'Ask an AI to state uncertainty, then verify it yourself'
+];
+function renderTicker() {
+  const tips = activeTrack === 'ai' ? AI_TIPS : TIPS;
+  $('#tick').innerHTML = [...tips, ...tips].map(t => '<span>◆ ' + esc(t) + '</span>').join('');
+}
+renderTicker();
+
+
+const CARDS = [
+  ['phish', 'Spot the Phish', 'Pick apart three fake emails and click every red flag.'],
+  ['links', 'Link Inspector', 'Learn to read a web address like a detective.'],
+  ['message', 'Message Check', 'Paste a suspicious text and see what stands out.'],
+  ['pass', 'Password Lab', 'Watch bad passwords fall in seconds, then build a good one.'],
+  ['quiz', 'Scam or Safe?', 'Quick rounds for seniors, students and workers.'],
+  ['cyberDrill', 'Security Sprint', 'Make a first move in common account and device incidents.'],
+  ['scen', 'What Would You Do?', 'Choose your move in real-life situations.'],
+  ['list', 'Protect Yourself', 'Checklists for different kinds of people.'],
+  ['checkup', 'Security Check-up', 'Answer a few questions and get a to-do list.'],
+  ['recovery', 'If It Already Happened', 'What to do, step by step, if you clicked or paid.'],
+  ['card', 'Pause Card', 'Print a card for the phone with who to call.'],
+  ['lookout', 'Scam Calendar', 'Which scams show up at which time of year.'],
+  ['workshop', 'Workshop Kit', 'Teach this to others and log what you learn.']
+];
+function drawCards() {
+  $('#modcards').innerHTML = CARDS.map((c, i) => {
+    const lock = isLocked(c[0]) && !me ? '<span class="lk">needs login</span>' : '';
+    return `<div class="card"><span class="num">FILE ${String(i + 1).padStart(2, '0')}${lock}</span><h3>${esc(c[1])}</h3><p>${esc(c[2])}</p><button class="btn" data-go="${c[0]}">Open</button></div>`;
+  }).join('');
+}
+
+
+const STAMPS = [
+  ['phishAll', 'Phish', 'Hunter', 'Found every flag in an email'],
+  ['linkStreak', 'Link', 'Reader', 'Got 5 link tests right'],
+  ['pwStrong', 'Lock', 'Smith', 'Made a strong password'],
+  ['quizPerfect', 'Sharp', 'Eye', 'Perfect quiz round'],
+  ['scenAll', 'Cool', 'Head', 'Finished every scenario'],
+  ['checks5', 'Shield', 'Up', 'Ticked 5 protections'],
+  ['checkup', 'Full', 'Check', 'Finished the check-up'],
+  ['teach', 'Good', 'Teacher', 'Logged 3 workshops'],
+  ['aiBasicsBadge', 'AI', 'Explorer', 'Explored all three AI concepts'],
+  ['aiPromptBadge', 'Prompt', 'Builder', 'Built a clear practice prompt'],
+  ['aiHumanBadge', 'Human', 'First', 'Cleared the responsible AI challenge'],
+  ['aiSourceBadge', 'Source', 'Sleuth', 'Cleared the source-check challenge'],
+  ['aiMediaBadge', 'Media', 'Checker', 'Cleared the AI media challenge'],
+  ['aiPrivacyBadge', 'Fair', 'Guide', 'Cleared the privacy and fairness challenge'],
+  ['aiTaskBadge', 'Task', 'Pilot', 'Matched an AI task to the right level of risk'],
+  ['aiQualityBadge', 'Answer', 'Editor', 'Practiced checking and improving AI answers']
+];
+function drawStamps() {
+  const render = items => items.map(b => {
+    const gotClass = S.got[b[0]] ? 'got' : '';
+    return `<div class="stamp ${gotClass}" title="${esc(b[3])}"><div><b>${esc(b[1])}<br>${esc(b[2])}</b>${S.got[b[0]] ? 'earned' : 'locked'}</div></div>`;
+  }).join('');
+  $('#badges').innerHTML = render(STAMPS);
+  $('#aiBadges').innerHTML = render(STAMPS.filter(b => b[0].startsWith('ai')));
+}
+
+
+const EMAILS = [
+  {
+    name: 'Bank alert',
+    from: `Northbridge Security &lt;<span class="hot" data-w="The sender domain is northbridge-secure.co, not the bank's real site.">alerts@northbridge-secure.co</span>&gt;`,
+    subj: `<span class="hot" data-w="Fear plus a deadline. Classic pressure.">URGENT: Your account will be suspended</span>`,
+    body: `<p><span class="hot" data-w="Real banks use your name. 'Dear Customer' means a mass mailing.">Dear Customer,</span></p>
+      <p>We detected unusual activity. <span class="hot" data-w="A short deadline stops you from thinking or asking anyone.">You must verify your identity within 24 hours</span> or your account will be locked permanently.</p>
+      <p><span class="hot" data-w="The text says one address but the real link goes somewhere else. Always check where a link goes.">https://www.northbridge.com/verify</span> <small style="color:#888">(really goes to northbridge-secure.co/login)</small></p>
+      <p>Thanks,<br>Northbridge Security Team<br><span class="hot" data-w="No department, no phone number, no real person to talk to.">Do not reply to this message.</span></p>`
+  },
+  {
+    name: 'Package text',
+    from: `<span class="hot" data-w="Delivery companies don't text from a random personal-looking number.">+1 (415) 555-0199</span>`,
+    subj: 'Delivery problem',
+    body: `<p>Your package is on hold. <span class="hot" data-w="You never said you were expecting anything. Scammers text thousands of people hoping some are.">Pay a $1.99 redelivery fee</span> here:</p>
+      <p><span class="hot" data-w="Shortened links hide where they go. Go to the carrier's real website yourself.">bit.ly/pkg-redeliver-8812</span></p>
+      <p><span class="hot" data-w="Tiny fees are a way to grab your card number. Real carriers don't text payment links.">Enter your card details to release it today.</span></p>`
+  },
+  {
+    name: 'Boss request',
+    from: `Dana Whitfield (CEO) &lt;<span class="hot" data-w="The name looks right but the address is a free Gmail account, not the company's.">dana.whitfield.ceo@gmail.com</span>&gt;`,
+    subj: 'Quick favor',
+    body: `<p>Are you at your desk? <span class="hot" data-w="Scammers ask for secrecy so nobody can warn you.">I'm in a meeting and can't talk, so keep this between us.</span></p>
+      <p><span class="hot" data-w="Gift cards can't be traced or refunded. No real business pays this way.">I need 5 gift cards at $100 each for a client. Buy them and send me the codes.</span></p>
+      <p><span class="hot" data-w="More rushing, plus a promise to pay you back so it feels normal.">It's urgent. I'll pay you back today.</span></p>`
+  }
+];
+let emailNo = 0;
+let flagsFound = 0;
+
+
+function drawEmail() {
+  const m = EMAILS[emailNo];
+  $('#phishPick').innerHTML = EMAILS.map((e, i) => `<button class="btn ${i === emailNo ? '' : 'alt'}" data-e="${i}">${esc(e.name)}</button>`).join('');
+  $('#mailhd').innerHTML = `<div><b>From:</b> ${m.from}</div><div><b>Subject:</b> ${m.subj}</div>`;
+  $('#mailbd').innerHTML = m.body;
+  $('#flags').innerHTML = '';
+  $('#phishNote').textContent = 'Tap the underlined parts.';
+  flagsFound = 0;
+  countFlags();
+}
+
+function countFlags() {
+  const total = $$('#mailhd .hot, #mailbd .hot').length;
+  $('#phishScore').textContent = 'Flags found: ' + flagsFound + ' / ' + total;
+  if (emailNo === 0 && total && flagsFound === total) {
+    completedDemos.add('cyberPhish');
+    showDemoSignup('cyberDemoSignup');
+  }
+  if (total && flagsFound === total) award('phish' + emailNo, 10, 'found every red flag');
+  if (EMAILS.every((e, i) => S.got['phish' + i])) award('phishAll', 30, 'all three emails cleared');
+}
+function flag(el) {
+  if (el.classList.contains('found')) return;
+  el.classList.add('found');
+  flagsFound++;
+  $('#phishNote').textContent = el.dataset.w;
+  $('#flags').insertAdjacentHTML('beforeend', '<div>' + esc(el.dataset.w) + '</div>');
+  countFlags();
+}
+$('#phish').addEventListener('click', e => {
+  const h = e.target.closest('.hot');
+  if (h) flag(h);
+  const b = e.target.closest('[data-e]');
+  if (b) { emailNo = +b.dataset.e; drawEmail(); }
+});
+$('#reveal').onclick = () => $$('#mailhd .hot, #mailbd .hot').forEach(flag);
+
+
+// ---------- link inspector ----------
+const SHORT_ENDINGS = ['co', 'com', 'org', 'net', 'gov', 'ac', 'edu'];
+
+
+function pullApart(raw) {
+  let s = raw.trim();
+  if (!s) return null;
+  if (!/^[a-z][a-z0-9+.-]*:\/\//i.test(s)) s = 'http://' + s;
+  let u;
+  try { u = new URL(s); } catch (e) { return { bad: true }; }
+
+
+  const host = u.hostname;
+  const parts = host.split('.');
+  const isIP = /^\d+\.\d+\.\d+\.\d+$/.test(host);
+  let keep = 2;
+  if (parts.length >= 3 && SHORT_ENDINGS.includes(parts[parts.length - 2]) && parts[parts.length - 1].length === 2) keep = 3;
+  const owner = isIP ? host : parts.slice(-keep).join('.');
+  const front = isIP ? '' : parts.slice(0, -keep).join('.');
+  const first = owner.split('.')[0];
+
+
+  const flags = [];
+  if (u.protocol === 'http:') flags.push('Not encrypted. The link starts with http, not https. Never type a password on a page like this.');
+  if (isIP) flags.push('Uses a number instead of a name. Real companies almost never do that.');
+  if (raw.includes('@')) flags.push('Has an @ sign. The browser ignores everything before it, which hides the real site.');
+  if (host.includes('xn--')) flags.push('Uses special look-alike characters, so some letters may not be what they seem.');
+  if (front.split('.').filter(Boolean).length >= 3) flags.push('Very long chain in front of the name. That is a way to bury the real owner.');
+  if (!isIP && first.includes('-')) flags.push('Hyphen in the main name, like bank-secure.com. Real brands rarely need one.');
+  if (!isIP && /\d/.test(first) && /[a-z]/i.test(first)) flags.push('Numbers mixed into the name, like paypa1 or g00gle. Look-alike spelling.');
+  if (/\.(zip|top|xyz|click|work|support|co|gq|cf|tk)$/.test(owner)) flags.push('Unusual ending (.' + owner.split('.').pop() + '). Not proof of anything, but common in scam links.');
+  if (front && /(login|verify|secure|update|confirm|account)/i.test(front)) flags.push('Words like login or verify in front of the real name are a favorite disguise.');
+  if (front && /\.(com|net|org|gov|edu)$/i.test(front)) flags.push('A brand name is hiding in front: "' + front + '" is just decoration. The owner is ' + owner + '.');
+  return { u, owner, front, flags };
+}
+
+
+$('#urlin').addEventListener('input', e => {
+  const a = pullApart(e.target.value);
+  const out = $('#urlout');
+  const fl = $('#urlflags');
+  if (!a) { out.textContent = 'Type or paste a link above.'; fl.innerHTML = ''; return; }
+  if (a.bad) { out.textContent = "That doesn't look like a link."; fl.innerHTML = ''; return; }
+  out.innerHTML = `<span class="p">${esc(a.u.protocol)}//</span>${a.front ? '<span class="s">' + esc(a.front) + '.</span>' : ''}<span class="d">${esc(a.owner)}</span><span class="r">${esc((a.u.port ? ':' + a.u.port : '') + a.u.pathname + a.u.search)}</span>`;
+  fl.innerHTML = a.flags.length
+    ? a.flags.map(f => '<div>' + esc(f) + '</div>').join('')
+    : '<div class="fine">Nothing odd in the link itself. Still ask: was I expecting this?</div>';
+});
+
+
+const LINKS = [
+  ['https://www.paypal.com/signin', true, 'The owner is paypal.com and it uses https.'],
+  ['https://paypal.com.account-verify.top/login', false, 'Read it from the right. The owner is account-verify.top. "paypal.com" is just a subdomain they made up.'],
+  ['https://accounts.google.com/signin', true, '"accounts" is a subdomain of google.com, which is the real owner.'],
+  ['http://amaz0n-orders.co/track', false, 'A zero instead of an o, a hyphen, and no encryption.'],
+  ['https://login.microsoftonline.com', true, 'Looks odd but this is a real Microsoft sign-in address.'],
+  ['https://www.irs.gov.refund-center.xyz/claim', false, 'The owner is refund-center.xyz. The real IRS site ends in irs.gov.'],
+  ['https://github.com/login', true, 'The owner is github.com and /login is just a page on it.'],
+  ['http://192.168.44.12/bank/login', false, 'A bare number instead of a name, and no encryption.'],
+  ['https://mail.school.edu/webmail', true, 'The owner is school.edu, a real education domain.'],
+  ['https://secure.chase-account.verify-now.com', false, 'The owner is verify-now.com. "chase" and "secure" are just decoration in front.']
+];
+let linkOrder = shuffle(LINKS);
+let linkNo = 0;
+let linksRight = 0;
+
+
+function drawLink() {
+  const L = linkOrder[linkNo % linkOrder.length];
+  $('#lkcount').textContent = 'Link ' + ((linkNo % linkOrder.length) + 1) + ' of ' + linkOrder.length;
+  $('#lkurl').textContent = L[0];
+  $('#lkfb').innerHTML = '';
+  $$('[data-lk]').forEach(b => b.disabled = false);
+}
+$('#links').addEventListener('click', e => {
+  const b = e.target.closest('[data-lk]');
+  if (!b) return;
+  const L = linkOrder[linkNo % linkOrder.length];
+  const right = (b.dataset.lk === 'real') === L[1];
+  $$('[data-lk]').forEach(x => x.disabled = true);
+  if (right) { linksRight++; if (linksRight >= 5) award('linkStreak', 30, '5 links read right'); }
+  const fbClass = right ? 'ok' : 'no';
+  $('#lkfb').innerHTML = `<div class="fb ${fbClass}"><b>${right ? 'Correct!' : 'Not quite.'}</b> This one is ${L[1] ? 'REAL' : 'FAKE'}. ${esc(L[2])}</div><button class="btn" id="lkn" style="margin-top:10px">Next link</button>`;
+  $('#lkn').onclick = () => { linkNo++; drawLink(); };
+});
+
+
+// ---------- message check ----------
+const SIGNS = [
+  { w: 3, re: /\b(gift ?cards?|wire transfers?|western union|money ?gram|bitcoin|crypto(currency)?|zelle|cash ?app|venmo|itunes cards?|prepaid cards?|steam cards?)\b/gi,
+    t: 'Wants a payment that is hard to undo', d: 'Gift cards, wires and crypto can not be reversed. Real organizations do not demand them.' },
+  { w: 3, re: /\b(verification code|security code|one[- ]time (code|password)|otp|pin number|social security number|ssn|routing number|card number|cvv|password)\b/gi,
+    t: 'Asks for a code or private detail', d: 'Nobody who is really helping you needs a code you were sent or your full account details.' },
+  { w: 3, re: /\b(don'?t tell (anyone|anybody|mom|dad|your)|keep (this|it) (between us|secret|quiet|confidential)|tell no ?one|do not tell)\b/gi,
+    t: 'Asks you to keep a secret', d: 'Secrecy stops other people from warning you. It is a big sign of a scam.' },
+  { w: 2, re: /\b(arrest(ed)?|warrant|lawsuit|legal action|police|deport(ed|ation)?|suspended|locked|frozen|penalt(y|ies)|criminal|jail)\b/gi,
+    t: 'Threatens you', d: 'Threats of arrest or lock-outs are meant to scare you into acting before you think.' },
+  { w: 2, re: /\b(urgent(ly)?|immediately|right now|act now|within \d+ (hours?|minutes?|days?)|today only|last chance|final notice|expires?( today)?|asap)\b/gi,
+    t: 'Rushes you', d: 'Real problems rarely have a deadline in minutes. The pressure is the whole point.' },
+  { w: 2, re: /\b(you('ve| have)? won|winner|congratulations|prize|lottery|inheritance|free (gift|iphone|vacation)|selected)\b/gi,
+    t: 'Promises a prize', d: 'You can not win a contest you never entered, and real prizes do not charge fees.' },
+  { w: 2, re: /\b(call|text|dial|reply)\b[^.\n]{0,40}\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/gi,
+    t: 'Tells you to call or text a number', d: 'Look up the real number yourself instead of using one from a message that came to you.' },
+  { w: 1, re: /(https?:\/\/[^\s]+|www\.[^\s]+|\b(bit\.ly|tinyurl\.com|t\.co)\/[^\s]+)/gi,
+    t: 'Has a link', d: 'Do not tap it. Paste it into the Link Inspector, or type the real address yourself.' },
+  { w: 1, re: /\b(dear (customer|user|client|sir|madam|account holder)|valued customer)\b/gi,
+    t: 'Generic greeting', d: 'Companies that know you use your name. Mass mailings do not.' }
+];
+const SAMPLE_MSG = 'URGENT: This is Officer Davis from the Social Security Administration. Your number has been linked to a crime and a warrant will be issued. Do not tell anyone. Call 888-555-0100 within 2 hours and be ready to pay with gift cards.';
+
+
+function scanMessage(text) {
+  const hits = [];
+  SIGNS.forEach((r, i) => {
+    r.re.lastIndex = 0;
+    let m;
+    while ((m = r.re.exec(text))) {
+      hits.push({ from: m.index, to: m.index + m[0].length, i });
+      if (!m[0].length) r.re.lastIndex++;
+    }
+  });
+  hits.sort((a, b) => a.from - b.from || b.to - a.to);
+  const keep = [];
+  let end = -1;
+  for (const h of hits) if (h.from >= end) { keep.push(h); end = h.to; }
+  const kinds = [...new Set(hits.map(h => h.i))];
+  const score = kinds.reduce((n, i) => n + SIGNS[i].w, 0);
+  return { keep, kinds, score };
+}
+
+
+function drawMessage() {
+  const text = $('#msgin').value;
+  const box = $('#msgout');
+  if (!text.trim()) { box.hidden = true; return; }
+  const r = scanMessage(text);
+
+
+  let html = '';
+  let pos = 0;
+  r.keep.forEach(h => {
+    html += esc(text.slice(pos, h.from)) + '<mark title="' + esc(SIGNS[h.i].t) + '">' + esc(text.slice(h.from, h.to)) + '</mark>';
+    pos = h.to;
+  });
+  html += esc(text.slice(pos));
+  $('#msghl').innerHTML = html;
+
+
+  $('#msgfinds').innerHTML = r.kinds.length
+    ? r.kinds.sort((a, b) => SIGNS[b].w - SIGNS[a].w).map(i => `<div><b>${esc(SIGNS[i].t)}.</b> ${esc(SIGNS[i].d)}</div>`).join('')
+    : '<div class="fine">Nothing obvious found. That does not mean it is safe. If it asks for money, codes or a click you did not expect, check first.</div>';
+
+
+  const [cls, head, sub] =
+    r.score >= 6 ? ['v-bad', 'Very likely a scam', 'Do not reply, click or pay. Block the sender and report it.'] :
+    r.score >= 3 ? ['v-warn', 'Looks suspicious', 'A few warning signs. Contact the company using a number you already trust before doing anything.'] :
+    r.score >= 1 ? ['v-warn', 'One or two warning signs', 'Not conclusive, but slow down and check first.'] :
+                   ['v-ok', 'No common tricks found', 'Stay alert. Scammers can write polite messages too.'];
+  $('#msghead').className = cls;
+  $('#msghead').textContent = head;
+  $('#msgsub').textContent = sub;
+  box.hidden = false;
+}
+$('#msgin').addEventListener('input', drawMessage);
+$('#msgsample').onclick = () => { $('#msgin').value = SAMPLE_MSG; drawMessage(); };
+$('#msgclear').onclick = () => { $('#msgin').value = ''; drawMessage(); };
+
+
+// ---------- password lab ----------
+const COMMON_PW = ['password', '123456', '12345678', 'qwerty', 'abc123', 'letmein', 'welcome', 'monkey', 'dragon', 'iloveyou', 'admin', 'login', 'football', 'baseball', 'sunshine', 'princess', 'master', 'shadow', 'passw0rd', 'trustno1', 'summer', 'winter', 'hello', 'secret'];
+
+
+function prettyTime(sec) {
+  if (sec < 1) return 'instantly';
+  if (sec > 31557600 * 1e6) return 'millions of years';
+  const units = [['year', 31557600], ['day', 86400], ['hour', 3600], ['minute', 60], ['second', 1]];
+  for (const [name, size] of units) {
+    if (sec >= size) {
+      const n = Math.floor(sec / size);
+      return n.toLocaleString() + ' ' + name + (n > 1 ? 's' : '');
+    }
+  }
+}
+
+
+function rate(pw) {
+  if (!pw) return null;
+  let pool = 0;
+  if (/[a-z]/.test(pw)) pool += 26;
+  if (/[A-Z]/.test(pw)) pool += 26;
+  if (/\d/.test(pw)) pool += 10;
+  if (/[^A-Za-z0-9]/.test(pw)) pool += 33;
+  let bits = pw.length * Math.log2(pool || 1);
+  const tips = [];
+  const low = pw.toLowerCase();
+  if (COMMON_PW.some(c => low.includes(c))) { bits = Math.min(bits, 22); tips.push('Has a very common password or word in it. Those get tried first.'); }
+  if (/^\d+$/.test(pw)) { bits = Math.min(bits, pw.length * 3.32); tips.push('Only numbers. Add letters or switch to a passphrase.'); }
+  if (/(.)\1{2,}/.test(pw)) { bits *= .75; tips.push('Repeated characters like aaa are easy to guess.'); }
+  if (/(0123|1234|2345|abcd|qwer|asdf)/i.test(pw)) { bits *= .7; tips.push('Keyboard and number runs are in every cracking list.'); }
+  if (/(19|20)\d\d/.test(pw)) { bits *= .85; tips.push('Years are easy guesses.'); }
+  if (pw.length < 12) tips.push('Try for 12 or more characters. Length beats symbols.');
+  const seconds = Math.pow(2, bits) / 2 / 1e10;
+  let verdict, color, width;
+  if (bits < 30) { verdict = 'Very weak'; color = '#d7263d'; width = 12; }
+  else if (bits < 45) { verdict = 'Weak'; color = '#e8642c'; width = 32; }
+  else if (bits < 60) { verdict = 'Okay'; color = '#f2b134'; width = 55; }
+  else if (bits < 80) { verdict = 'Strong'; color = '#7bc47f'; width = 80; }
+  else { verdict = 'Excellent'; color = '#2e9e5b'; width = 100; }
+  return { bits, seconds, verdict, color, width, tips };
+}
+
+
+$('#pw').addEventListener('input', e => {
+  const r = rate(e.target.value);
+  $('#pwl').textContent = e.target.value.length;
+  if (!r) {
+    $('#pwbar').style.width = '0';
+    $('#pwv').textContent = '-';
+    $('#pwt').textContent = '-';
+    $('#pwtips').innerHTML = '';
+    return;
+  }
+  $('#pwbar').style.width = r.width + '%';
+  $('#pwbar').style.background = r.color;
+  $('#pwv').textContent = r.verdict;
+  $('#pwt').textContent = prettyTime(r.seconds);
+  $('#pwtips').innerHTML = r.tips.map(t => '<div>' + esc(t) + '</div>').join('');
+  if (r.bits >= 80) award('pwStrong', 30, 'strong password');
+});
+
+
+const WORDS = 'able acorn amber anchor apple arrow atlas autumn bacon badge baker banjo basil beach bench berry bison blaze bloom boat bolt brick brook cabin camel candy canoe cedar chair chalk chess cider cliff cloud clover cobra comet coral crane daisy delta denim diner dolphin dragon eagle ember fable falcon fern field flame forest frost garden ginger glider grape harbor hazel heron honey igloo island jacket jelly jungle kayak kettle koala ladder lantern lemon lilac lizard magnet maple marble meadow melon mitten moose mountain nickel noodle oasis olive orbit otter paddle panda pebble pepper pillow planet pocket pretzel puddle quartz rabbit raven ribbon river rocket saddle salmon shadow silver sketch spoon sunset thunder tiger tulip turtle velvet violet walnut whale willow window yogurt zebra zipper'.split(' ');
+
+
+function randInt(n) {
+  const a = new Uint32Array(1);
+  const limit = Math.floor(4294967296 / n) * n;
+  let x;
+  do { crypto.getRandomValues(a); x = a[0]; } while (x >= limit);
+  return x % n;
+}
+function newPhrase() {
+  const words = [];
+  for (let i = 0; i < 4; i++) words.push(WORDS[randInt(WORDS.length)]);
+  return words.join('-') + '-' + (10 + randInt(90));
+}
+$('#gen').onclick = () => { $('#phrase').textContent = newPhrase(); };
+$('#phrase').textContent = newPhrase();
+
+
+// ---------- quiz ----------
+const QUIZ = [
+  ['senior', 'Text from "Bank"', 'Your account is LOCKED. Tap http://secure-bank-verify.co within 1 hour to restore access.', true, 'A one-hour deadline and a weird link. Call the number on your card instead.'],
+  ['senior', 'Voicemail', 'This is Social Security. Your number is linked to a crime. Press 1 or a warrant will be issued.', true, 'Government agencies do not threaten arrest by robocall.'],
+  ['senior', 'Phone call', "Grandma, it's me, I'm in jail. Please don't tell Mom. Send gift cards right now.", true, 'The grandparent scam. Hang up and call your grandchild on a number you already have.'],
+  ['senior', 'Email from the pharmacy', 'Hi Margaret, your prescription is ready for pickup on Main St. Hours: 9 to 7.', false, 'You expected it, it uses your name, asks for nothing and has no links.'],
+  ['senior', 'Caller claiming to be device support', 'We found a virus on your phone. Install this remote support app and read me the code on screen.', true, 'Unexpected support callers cannot scan or fix your device this way. Hang up and contact the device maker using its official website.'],
+  ['senior', 'Repeated sign-in prompts', 'Your phone shows several approval prompts, but you are not trying to sign in anywhere.', true, 'Deny every prompt. From a trusted device, change the account password and review recent sign-ins. Never approve a prompt just to make it stop.'],
+  ['teen', "Message from a friend's account", 'omg is this you in this video?? http://vid-watch.top/you', true, 'A hacked account sending bait. Check with your friend another way before tapping.'],
+  ['teen', 'Game chat', 'Free 5,000 skins! Just log in with your game account at skin-claim.gg to get them.', true, 'Games never ask you to log in through some random site. They want your account.'],
+  ['teen', 'Email from school', "Reminder: picture day is Thursday. Order forms are in your teacher's folder. No payment online.", false, 'No link, no payment, and it matches a normal school thing.'],
+  ['teen', 'Message from a "recruiter"', 'Earn $500 a day from home! Just send us $50 for your starter kit.', true, 'Real jobs do not make you pay to start.'],
+  ['teen', 'QR code for a game reward', 'Scan this QR code and sign in to claim a limited-time game reward.', true, 'A QR code can hide a fake login page. Open the official game app yourself and check promotions there.'],
+  ['work', 'Email from "IT"', 'Your password expires today. Click here to keep your access.', true, 'Check with IT directly. Urgent password links are a top phishing trick.'],
+  ['work', 'Email from a vendor', 'Invoice attached. Our bank details have CHANGED, please pay to the new account.', true, 'Changed bank details are a business email fraud sign. Confirm by calling a number you already have.'],
+  ['work', 'Calendar invite', 'Weekly team sync, Tuesday 10am. Agenda is in the shared drive you already use.', false, 'Routine, from someone you know, nothing strange asked.'],
+  ['work', 'Unexpected MFA prompt', 'A sign-in approval appears while you are away from your work computer.', true, 'Deny it and report it to IT through a known channel. Do not approve a request you did not start.'],
+  ['all', 'Email', 'Congratulations! You won $1,500,000. Pay a $250 processing fee to claim it.', true, 'You can not win something you never entered, and real prizes do not charge fees.'],
+  ['all', 'Text', "Dr. Lee's office: your appointment is tomorrow at 10:30. Call the number on your card to reschedule.", false, 'Points you to a number you already have. No links, no payment.'],
+  ['all', 'Pop-up', 'WARNING: virus found! Call Support at 1-800-555-0142 now. Do not close this window.', true, 'Real warnings never give you a phone number. Close it or restart.'],
+  ['all', 'Text about a lost signal', 'Your phone suddenly has no service. A caller asks you to confirm a code to restore it.', true, 'A sudden loss of service can have several causes, including a SIM-swap attempt. Do not share codes; call your carrier from another phone.'],
+  ['all', 'Parking meter QR sticker', 'A QR sticker covers the meter instructions and opens a page asking for your card and account password.', true, 'Do not enter an account password on a payment page reached from an unexpected sticker. Use the official parking app or the address printed by the city.']
+];
+const QUIZ_GROUPS = [['all', 'Everyone'], ['senior', 'Older adults'], ['teen', 'Students'], ['work', 'Work']];
+let qGroup = 'all';
+let qList = [];
+let qNo = 0;
+let qScore = 0;
+
+
+function startQuiz() {
+  const pool = qGroup === 'all' ? QUIZ : QUIZ.filter(q => q[0] === qGroup || q[0] === 'all');
+  qList = shuffle(pool).slice(0, 8);
+  qNo = 0;
+  qScore = 0;
+  $('#qfilter').innerHTML = QUIZ_GROUPS.map(g => `<button type="button" data-qf="${g[0]}" aria-pressed="${g[0] === qGroup}">${esc(g[1])}</button>`).join('');
+  drawQuestion();
+}
+function drawQuestion() {
+  const box = $('#qbox');
+  if (qNo >= qList.length) {
+    if (qScore === qList.length) award('quizPerfect', 40, 'perfect round');
+    box.innerHTML = `<h2>Round done</h2><p style="font-size:1.4rem"><b>${qScore} / ${qList.length}</b> right.</p><button class="btn" id="qagain">Play again</button>`;
+    $('#qagain').onclick = startQuiz;
+    return;
+  }
+  const q = qList[qNo];
+  box.innerHTML = `<p class="mono">Question ${qNo + 1} of ${qList.length}</p>
+    <div class="msg"><div class="from">${esc(q[1])}</div>${esc(q[2])}</div>
+    <div class="row" style="margin-top:12px"><button class="btn bad" data-a="1">SCAM</button><button class="btn good" data-a="0">SAFE</button></div>
+    <div id="qfb"></div>`;
+}
+$('#quiz').addEventListener('click', e => {
+  const f = e.target.closest('[data-qf]');
+  if (f) { qGroup = f.dataset.qf; startQuiz(); return; }
+  const a = e.target.closest('[data-a]');
+  if (!a) return;
+  const q = qList[qNo];
+  const right = (a.dataset.a === '1') === q[3];
+  if (right) { qScore++; award('q' + q[2].slice(0, 14), 5, 'right answer'); }
+  $$('#qbox [data-a]').forEach(b => b.disabled = true);
+  const fbClass = right ? 'ok' : 'no';
+  $('#qfb').innerHTML = `<div class="fb ${fbClass}"><b>${right ? 'Correct!' : 'Not quite.'}</b> This was ${q[3] ? 'a SCAM' : 'SAFE'}. ${esc(q[4])}</div>
+    <button class="btn" id="qn" style="margin-top:10px">${qNo + 1 === qList.length ? 'See score' : 'Next'}</button>`;
+  $('#qn').onclick = () => { qNo++; drawQuestion(); };
+});
+
+
+const AI_VERIFY_CASES = [
+  {
+    claim: '“A 2023 university study found that 82% of students learn twice as fast with this app.” The AI gives a study title and author.',
+    options: ['Repeat the number because a title and author were included.', 'Search the university or journal site, find the original paper, and check its methods and exact claim.', 'Ask the same AI whether it made up the citation.'],
+    correct: 1,
+    reason: 'A plausible citation can still be invented. Verify the original publication and whether it actually supports the statistic.'
+  },
+  {
+    claim: '“The city library is open until 9 p.m. tonight.” The AI answer has no link and may be out of date.',
+    options: ['Check the library’s official current hours page or call the branch.', 'Trust the answer because opening hours rarely change.', 'Ask an AI to guess based on nearby libraries.'],
+    correct: 0,
+    reason: 'Time-sensitive facts should be checked against an up-to-date source controlled by the organization.'
+  },
+  {
+    claim: '“This supplement is safe with all prescription medicines.” The AI provides a confident explanation.',
+    options: ['Try it because the answer sounds medically detailed.', 'Verify with a pharmacist or clinician using your actual medicines and a trusted medical source.', 'Ask the AI to make the claim sound more cautious.'],
+    correct: 1,
+    reason: 'Medication safety is high stakes and depends on personal details. Use a qualified health professional, not a chatbot, for the decision.'
+  }
+];
+let aiVerifyIndex = 0;
+let aiVerifyScore = 0;
+let aiVerifyAnswered = false;
+
+
+function drawAIVerify() {
+  const box = $('#aiVerifyBox');
+  if (aiVerifyIndex >= AI_VERIFY_CASES.length) {
+    if (aiVerifyScore === AI_VERIFY_CASES.length) {
+      award('aiSourceCheck', 25, 'source-check challenge cleared');
+      award('aiSourceBadge', 0, 'source-check badge earned');
+    }
+    box.innerHTML = `<h2>Audit complete</h2><p>You chose the strongest check in <b>${aiVerifyScore} of ${AI_VERIFY_CASES.length}</b> cases.</p><button class="btn" id="aiVerifyAgain">Run it again</button>`;
+    $('#aiVerifyAgain').onclick = () => { aiVerifyIndex = 0; aiVerifyScore = 0; drawAIVerify(); };
+    return;
+  }
+  aiVerifyAnswered = false;
+  const item = AI_VERIFY_CASES[aiVerifyIndex];
+  box.innerHTML = `<p class="mono">CLAIM AUDIT ${String(aiVerifyIndex + 1).padStart(2, '0')} / ${AI_VERIFY_CASES.length}</p><blockquote class="msg">${esc(item.claim)}</blockquote><h3>What is the best next step?</h3>`
+    + item.options.map((option, i) => `<button type="button" class="ai-choice" data-ai-verify="${i}">${esc(option)}</button>`).join('')
+    + '<div id="aiVerifyFeedback" aria-live="polite"></div>';
+}
+$('#aiVerifyBox').addEventListener('click', e => {
+  if (e.target.id === 'aiVerifyNext') { aiVerifyIndex++; drawAIVerify(); return; }
+  const button = e.target.closest('[data-ai-verify]');
+  if (!button || aiVerifyAnswered) return;
+  aiVerifyAnswered = true;
+  const item = AI_VERIFY_CASES[aiVerifyIndex];
+  const correct = Number(button.dataset.aiVerify) === item.correct;
+  if (correct) aiVerifyScore++;
+  $$('[data-ai-verify]', $('#aiVerifyBox')).forEach((choice, i) => {
+    choice.disabled = true;
+    if (i === item.correct) choice.classList.add('correct');
+    else if (choice === button) choice.classList.add('incorrect');
+  });
+  $('#aiVerifyFeedback').innerHTML = `<div class="fb ${correct ? 'ok' : 'no'}"><b>${correct ? 'Strong check.' : 'Check the source.'}</b> ${esc(item.reason)}</div><button class="btn" id="aiVerifyNext" style="margin-top:10px">${aiVerifyIndex + 1 === AI_VERIFY_CASES.length ? 'See score' : 'Next claim'}</button>`;
+});
+
+const AI_MEDIA_CASES = [
+  {
+    prompt: 'A voice message sounds like your relative asking for emergency money. What is the safest first step?',
+    options: ['Send it quickly because the voice sounds familiar.', 'Call your relative on a number you already have and verify the story.', 'Reply to the voice message asking for a secret code.'],
+    correct: 1,
+    reason: 'A familiar voice can be copied or edited. Verify through a separate, trusted channel before sending money.'
+  },
+  {
+    prompt: 'A shocking video is spreading, but the account posting it is unfamiliar. What should you do before sharing?',
+    options: ['Find the original upload and look for independent confirmation.', 'Share it with a warning so people can decide.', 'Use one online deepfake detector and treat its result as certain.'],
+    correct: 0,
+    reason: 'Provenance and independent corroboration are stronger than a single detector or a repost.'
+  },
+  {
+    prompt: 'An image has odd-looking hands. Does that prove it was generated by AI?',
+    options: ['Yes, every generated image has visible errors.', 'No. Visual clues can raise questions, but they are not reliable proof on their own.', 'Yes, if the image also looks realistic.'],
+    correct: 1,
+    reason: 'Real images can have artifacts and generated images can look polished. Check the source and context.'
+  }
+];
+
+const AI_PRIVACY_CASES = [
+  {
+    prompt: 'You want help rewriting a work report that contains customer names and account numbers. What should you do?',
+    options: ['Paste it into any chatbot because the task is only editing.', 'Remove identifying details or use an approved tool under your organization’s rules.', 'Ask the chatbot not to remember the information after you send it.'],
+    correct: 1,
+    reason: 'Removing identifiers and following approved-tool rules reduces the risk of exposing private information.'
+  },
+  {
+    prompt: 'An AI ranking tool gives lower scores to applicants from one neighborhood. What is a responsible next step?',
+    options: ['Review the data and outcomes for unfair impact, with accountable human oversight.', 'Use the score as-is because a computer is neutral.', 'Hide the neighborhood field and assume the problem is solved.'],
+    correct: 0,
+    reason: 'Bias can arise indirectly. People need to investigate impact and remain accountable for consequential decisions.'
+  },
+  {
+    prompt: 'A chatbot gives advice about a serious health decision. What is the safest approach?',
+    options: ['Follow it if it lists several medical terms.', 'Use it as a starting point and discuss the decision with a qualified clinician.', 'Ask the chatbot to guarantee that the answer is correct.'],
+    correct: 1,
+    reason: 'AI can help prepare questions, but a qualified professional should guide high-stakes personal health decisions.'
+  }
+];
+
+function createAIChallenge(boxId, cases, badgeId, badgeMessage) {
+  let index = 0;
+  let score = 0;
+  let answered = false;
+  const box = $('#' + boxId);
+
+  function draw() {
+    if (index >= cases.length) {
+      if (score === cases.length) award(badgeId, 25, badgeMessage);
+      box.innerHTML = `<h2>Challenge complete</h2><p>You chose the safest response in <b>${score} of ${cases.length}</b> cases.</p><button class="btn" type="button" data-ai-extra-restart>Try again</button>`;
+      return;
+    }
+    answered = false;
+    const item = cases[index];
+    box.innerHTML = `<p class="mono">CASE ${String(index + 1).padStart(2, '0')} / ${cases.length}</p><h3>${esc(item.prompt)}</h3>`
+      + item.options.map((option, optionIndex) => `<button type="button" class="ai-choice" data-ai-extra-answer="${optionIndex}">${esc(option)}</button>`).join('')
+      + '<div data-ai-extra-feedback aria-live="polite"></div>';
+  }
+
+  box.addEventListener('click', event => {
+    if (event.target.closest('[data-ai-extra-restart]')) {
+      index = 0;
+      score = 0;
+      draw();
+      return;
+    }
+    if (event.target.closest('[data-ai-extra-next]')) {
+      index++;
+      draw();
+      return;
+    }
+    const button = event.target.closest('[data-ai-extra-answer]');
+    if (!button || answered) return;
+    answered = true;
+    const item = cases[index];
+    const correct = Number(button.dataset.aiExtraAnswer) === item.correct;
+    if (correct) score++;
+    $$('[data-ai-extra-answer]', box).forEach((choice, choiceIndex) => {
+      choice.disabled = true;
+      if (choiceIndex === item.correct) choice.classList.add('correct');
+      else if (choice === button) choice.classList.add('incorrect');
+    });
+    const nextLabel = index + 1 === cases.length ? 'See score' : 'Next case';
+    $('[data-ai-extra-feedback]', box).innerHTML = `<div class="fb ${correct ? 'ok' : 'no'}"><b>${correct ? 'Good check.' : 'Review the safer step.'}</b> ${esc(item.reason)}</div><button class="btn" type="button" data-ai-extra-next style="margin-top:10px">${nextLabel}</button>`;
+  });
+
+  draw();
+}
+
+createAIChallenge('aiMediaBox', AI_MEDIA_CASES, 'aiMediaBadge', 'AI media challenge cleared');
+createAIChallenge('aiPrivacyBox', AI_PRIVACY_CASES, 'aiPrivacyBadge', 'privacy and fairness challenge cleared');
+
+const AI_TASK_CASES = [
+  {
+    prompt: 'You need ten playful names for a fictional school club. Which approach fits?',
+    options: ['Ask AI for a brainstorm, then choose and edit the ideas yourself.', 'Ask AI to pick the club name and announce it as final.', 'Upload the school directory so it can personalize every suggestion.'],
+    correct: 0,
+    reason: 'Low-risk brainstorming is a good assistive task: keep the information fictional and make the final choice yourself.'
+  },
+  {
+    prompt: 'You are reviewing an AI summary of a new local emergency alert. What should you do?',
+    options: ['Share the summary because it sounds urgent.', 'Check the official emergency-management source and current time before acting or sharing.', 'Ask a second chatbot whether the first one is right.'],
+    correct: 1,
+    reason: 'Current safety information must be verified at the official source; an AI summary can omit or distort critical details.'
+  },
+  {
+    prompt: 'A team wants AI to decide which job applicants to reject. What is the responsible choice?',
+    options: ['Let the system decide because it is consistent.', 'Use a qualified human-led process, check for unfair impact, and follow applicable rules.', 'Hide the AI use from applicants and rely on its score.'],
+    correct: 1,
+    reason: 'Hiring is a consequential decision. AI should not replace accountable human judgment or fairness checks.'
+  }
+];
+const AI_QUALITY_CASES = [
+  {
+    prompt: 'An AI answer gives a statistic but no source. What is the best next move?',
+    options: ['Ask for a source, then locate and check the original evidence before using the number.', 'Use it if the number looks reasonable.', 'Ask the AI to repeat the statistic more confidently.'],
+    correct: 0,
+    reason: 'A request for a citation is only a starting point. Verify the original source and whether it supports the claim.'
+  },
+  {
+    prompt: 'A prompt says “write something about climate.” What change would make it more useful?',
+    options: ['Add a goal, audience, scope, format, and a request to flag uncertainty.', 'Ask for the longest possible answer.', 'Include private details so the AI has more context.'],
+    correct: 0,
+    reason: 'Clear context and output expectations improve relevance without sharing unnecessary personal information.'
+  },
+  {
+    prompt: 'The answer is polished but does not address your question. What should you do?',
+    options: ['Use it because the writing is strong.', 'Point out the mismatch, clarify the goal, and review the revised answer for accuracy.', 'Ask the AI to guarantee that it understood you.'],
+    correct: 1,
+    reason: 'Good writing is not the same as a good answer. Clarify the request, then check whether the revision actually meets the need.'
+  }
+];
+createAIChallenge('aiTasksBox', AI_TASK_CASES, 'aiTaskBadge', 'AI task-selection challenge cleared');
+createAIChallenge('aiQualityBox', AI_QUALITY_CASES, 'aiQualityBadge', 'AI answer-quality challenge cleared');
+
+
+const CYBER_DRILLS = [
+  {
+    prompt: 'Your phone shows an account sign-in approval you did not request. What should you do first?',
+    options: ['Approve it to clear the alert.', 'Deny it. Then use a trusted route to change the password and review active sessions.', 'Reply to a text asking whether the alert is real.'],
+    correct: 1,
+    reason: 'Deny unexpected sign-in requests. Then secure the account through its official app or website.'
+  },
+  {
+    prompt: 'You entered your bank password on a page opened from an unexpected text. What is the best next move?',
+    options: ['Use a different trusted device to contact the bank and change the password on the real site.', 'Wait to see if money disappears.', 'Reply to the text and ask the sender to remove your information.'],
+    correct: 0,
+    reason: 'Act quickly through a trusted device and official bank contact details. Never use the suspicious message to follow up.'
+  },
+  {
+    prompt: 'A surprising email attachment downloaded, but you have not opened it. What should you do?',
+    options: ['Open it to identify what it is.', 'Do not open it; delete it and run your device’s built-in security scan.', 'Forward it to a friend to ask what they think.'],
+    correct: 1,
+    reason: 'Do not open unexpected files. Delete the download and use trusted security tools.'
+  }
+];
+let cyberDrillIndex = 0;
+let cyberDrillScore = 0;
+let cyberDrillAnswered = false;
+
+
+function drawCyberDrill() {
+  const box = $('#cyberDrillBox');
+  if (cyberDrillIndex >= CYBER_DRILLS.length) {
+    if (cyberDrillScore === CYBER_DRILLS.length) award('cyberSprint', 25, 'security sprint cleared');
+    box.innerHTML = `<h2>Sprint complete</h2><p>You chose the safest first move in <b>${cyberDrillScore} of ${CYBER_DRILLS.length}</b> cases.</p><button class="btn" id="cyberDrillAgain">Run it again</button>`;
+    $('#cyberDrillAgain').onclick = () => { cyberDrillIndex = 0; cyberDrillScore = 0; drawCyberDrill(); };
+    return;
+  }
+  cyberDrillAnswered = false;
+  const item = CYBER_DRILLS[cyberDrillIndex];
+  box.innerHTML = `<p class="mono">RESPONSE ${String(cyberDrillIndex + 1).padStart(2, '0')} / ${CYBER_DRILLS.length}</p><h3>${esc(item.prompt)}</h3>`
+    + item.options.map((option, i) => `<button type="button" class="choice" data-cyber-drill="${i}">${esc(option)}</button>`).join('')
+    + '<div id="cyberDrillFeedback" aria-live="polite"></div>';
+}
+$('#cyberDrillBox').addEventListener('click', e => {
+  if (e.target.id === 'cyberDrillNext') { cyberDrillIndex++; drawCyberDrill(); return; }
+  const button = e.target.closest('[data-cyber-drill]');
+  if (!button || cyberDrillAnswered) return;
+  cyberDrillAnswered = true;
+  const item = CYBER_DRILLS[cyberDrillIndex];
+  const correct = Number(button.dataset.cyberDrill) === item.correct;
+  if (correct) cyberDrillScore++;
+  $$('[data-cyber-drill]', $('#cyberDrillBox')).forEach((choice, i) => {
+    choice.disabled = true;
+    if (i === item.correct) choice.classList.add('right');
+    else if (choice === button) choice.classList.add('wrong');
+  });
+  $('#cyberDrillFeedback').innerHTML = `<div class="fb ${correct ? 'ok' : 'no'}"><b>${correct ? 'Good first move.' : 'Try a safer first move.'}</b> ${esc(item.reason)}</div><button class="btn" id="cyberDrillNext" style="margin-top:10px">${cyberDrillIndex + 1 === CYBER_DRILLS.length ? 'See score' : 'Next situation'}</button>`;
+});
+
+
+const AI_CONCEPTS = {
+  training: 'Training data is the material used to teach a model patterns. It can be incomplete, old, or contain mistakes.',
+  hallucination: 'A hallucination is an answer that sounds plausible but is unsupported or made up. Verify names, quotes, numbers, and citations.',
+  bias: 'Bias can enter through data, design, or how a system is used. Check who may be missing or unfairly affected.'
+};
+const aiDemoConcepts = new Set();
+$('#aiBasics').addEventListener('click', e => {
+  const button = e.target.closest('[data-ai-reveal]');
+  if (!button) return;
+  $('#aiConceptNote').textContent = AI_CONCEPTS[button.dataset.aiReveal];
+  aiDemoConcepts.add(button.dataset.aiReveal);
+  award('aiNote-' + button.dataset.aiReveal, 5, 'AI concept explored');
+  if (['training', 'hallucination', 'bias'].every(concept => aiDemoConcepts.has(concept))) {
+    completedDemos.add('aiBasics');
+    award('aiBasicsBadge', 20, 'AI basics explored');
+    showDemoSignup('aiDemoSignup');
+  }
+});
+
+
+$('#aiBuild').addEventListener('click', () => {
+  const goal = $('#aiGoal').value.trim();
+  if (!goal) { $('#aiGoal').focus(); toast('Add a goal to build your prompt.'); return; }
+  const audience = $('#aiAudience').value.trim() || 'a general audience';
+  const format = $('#aiFormat').value;
+  const boundary = $('#aiBoundary').value.trim() || 'State uncertainty and do not invent facts or sources.';
+  $('#aiPromptOutput').textContent = `Goal: ${goal}\nAudience: ${audience}\nFormat: ${format}\nGuidance: ${boundary}`;
+  $('#aiCopy').disabled = false;
+  award('aiPromptBuilt', 10, 'prompt built');
+  award('aiPromptBadge', 20, 'clear practice prompt built');
+});
+$('#aiCopy').addEventListener('click', async () => {
+  const prompt = $('#aiPromptOutput').textContent;
+  try {
+    await navigator.clipboard.writeText(prompt);
+    toast('Prompt copied');
+  } catch (error) {
+    const range = document.createRange();
+    range.selectNodeContents($('#aiPromptOutput'));
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    toast('Select and copy the highlighted prompt');
+  }
+});
+
+
+const AI_CHECKS = [
+  {
+    question: 'A chatbot gives you a statistic for a class report and names a study. What should you do?',
+    answers: ['Use it because the answer includes a study title.', 'Find the study from a reliable source and confirm it supports the statistic.', 'Ask the same chatbot to promise that it is correct.'],
+    correct: 1,
+    why: 'A citation can be fabricated or misrepresented. Open the original source and check the claim.'
+  },
+  {
+    question: 'You want help summarizing a work document that includes customer names and account details. What is safest?',
+    answers: ['Paste the full document into any chatbot.', 'Remove or anonymize sensitive details, and use only a tool approved for that data.', 'Share it because a chatbot is not a person.'],
+    correct: 1,
+    why: 'AI services can store or process submitted content. Minimize personal data and follow your organization’s rules.'
+  },
+  {
+    question: 'An AI tool recommends rejecting a job applicant based on a generated score. What should happen?',
+    answers: ['Reject automatically to save time.', 'Have a qualified person review relevant evidence, fairness, and applicable rules before deciding.', 'Ask the AI to make the decision more confidently.'],
+    correct: 1,
+    why: 'High-impact decisions need accountable human review; automated scores can be biased or wrong.'
+  }
+];
+let aiCheckIndex = 0;
+let aiCheckScore = 0;
+let aiCheckAnswered = false;
+
+
+function drawAIQuestion() {
+  const box = $('#aiQuestion');
+  if (aiCheckIndex >= AI_CHECKS.length) {
+    if (aiCheckScore === AI_CHECKS.length) {
+      award('aiSafeUse', 25, 'responsible AI challenge cleared');
+      award('aiHumanBadge', 0, 'responsible AI badge earned');
+    }
+    box.innerHTML = `<h2>Challenge complete</h2><p>You got <b>${aiCheckScore} of ${AI_CHECKS.length}</b> right.</p><button class="btn" id="aiTryAgain">Try again</button>`;
+    $('#aiTryAgain').onclick = () => { aiCheckIndex = 0; aiCheckScore = 0; drawAIQuestion(); };
+    return;
+  }
+  aiCheckAnswered = false;
+  const item = AI_CHECKS[aiCheckIndex];
+  box.innerHTML = `<p class="mono">CHECK ${String(aiCheckIndex + 1).padStart(2, '0')} / ${AI_CHECKS.length}</p><h3>${esc(item.question)}</h3>`
+    + item.answers.map((answer, i) => `<button class="ai-choice" type="button" data-ai-answer="${i}">${esc(answer)}</button>`).join('')
+    + '<div id="aiAnswerFeedback" aria-live="polite"></div>';
+}
+$('#aiQuestion').addEventListener('click', e => {
+  if (e.target.id === 'aiNext') { aiCheckIndex++; drawAIQuestion(); return; }
+  const button = e.target.closest('[data-ai-answer]');
+  if (!button || aiCheckAnswered) return;
+  aiCheckAnswered = true;
+  const item = AI_CHECKS[aiCheckIndex];
+  const correct = Number(button.dataset.aiAnswer) === item.correct;
+  if (correct) aiCheckScore++;
+  $$('[data-ai-answer]', $('#aiQuestion')).forEach((choice, i) => {
+    choice.disabled = true;
+    if (i === item.correct) choice.classList.add('correct');
+    else if (choice === button) choice.classList.add('incorrect');
+  });
+  $('#aiAnswerFeedback').innerHTML = `<div class="fb ${correct ? 'ok' : 'no'}"><b>${correct ? 'Good call.' : 'Reconsider.'}</b> ${esc(item.why)}</div><button class="btn" type="button" id="aiNext" style="margin-top:10px">${aiCheckIndex + 1 === AI_CHECKS.length ? 'See score' : 'Next question'}</button>`;
+});
+
+
+// ---------- scenarios ----------
+const SCENES = [
+  { title: 'The tech support call',
+    story: 'Your phone rings. A friendly man says he is from your internet provider and your computer is sending out viruses. He wants you to install an app so he can fix it.',
+    choices: [
+      ['Install the app. He sounds professional.', 0, 'Remote-control apps give a stranger full access to your files and bank logins.'],
+      ['Hang up, then call your provider on the number from your bill.', 1, 'Right. Providers do not cold-call about viruses, and you picked a number you trust.'],
+      ['Give him your name and email so he can look you up.', 0, 'Even small details help scammers build a believable story.']
+    ] },
+  { title: 'The friend in trouble',
+    story: `A friend messages you on social media: "I'm stuck abroad and my wallet got stolen. Can you send $300 through a payment app? I'll pay you back."`,
+    choices: [
+      ["Send it. They're your friend.", 0, 'Their account may have been hacked. Always check first.'],
+      ['Call or text them on a number you already have.', 1, 'If it is really them you will know in a minute. If not, you just stopped a scam.'],
+      ['Ask a question only they would know, in the same chat.', 0, 'Better than nothing, but a hacker could be reading the chat. Use a different way to reach them.']
+    ] },
+  { title: 'The wrong number text',
+    story: `A stranger texts: "Oops, wrong number! Sorry. You seem nice though, how's your day?" Over a few days they get friendly and bring up a great crypto investment.`,
+    choices: [
+      ['Try a small investment to see if it works.', 0, 'Small early wins are bait. This kind of long con is called pig butchering.'],
+      ['Stop replying, block and report the number.', 1, 'Yes. Friendly strangers who bring up investments are running a script.'],
+      ["Keep chatting but don't invest.", 0, 'The longer you chat the more they work on you. Cutting it off is safest.']
+    ] },
+  { title: 'The cafe Wi-Fi',
+    story: 'You are at a cafe and want to check your bank. The free Wi-Fi is called "Cafe_Free_WiFi" and has no password.',
+    choices: [
+      ["Connect and log in to your bank. It's quick.", 0, 'Open networks can be watched or faked. Do not do sensitive stuff on them.'],
+      ["Use your phone's mobile data for banking instead.", 1, 'Good call. Mobile data is much safer than open public Wi-Fi.'],
+      ['Connect, but only if the page says "secure".', 0, 'A word or lock icon on a page does not protect you from a fake network.']
+    ] },
+  { title: 'The job that pays to start',
+    story: 'A message offers you a remote assistant job. They will mail you a check to buy equipment. You deposit it, keep your pay, and send the rest to their "vendor" with gift cards.',
+    choices: [
+      ['Deposit it and buy the cards. The bank made the money available.', 0, 'The check bounces days later and the bank takes the money back from you. This is the fake check scam.'],
+      ['Say no. Real employers do not send you money to pass along.', 1, 'Right. Any job where you send part of a check on to someone is a scam.'],
+      ['Ask them to send the check by courier first.', 0, 'How it gets to you is not the problem. Being asked to send money back is.']
+    ] },
+  { title: 'The urgent invoice',
+    story: 'At work you get an email from a vendor you know. It says their bank details changed and asks you to pay this month\'s invoice to the new account.',
+    choices: [
+      ['Pay it. The vendor name is right.', 0, 'Names are easy to fake. Changed payment details are a favorite fraud trick.'],
+      ['Call the vendor on a number from your own records.', 1, 'Exactly. Check with a number you already trust, never one from the email.'],
+      ['Reply to the email asking if the change is real.', 0, 'If a scammer wrote it, they will happily say yes.']
+    ] },
+  { title: 'The phone suddenly loses service',
+    story: 'Your phone shows no mobile service. A message says your number is being moved and asks you to reply with a one-time code to stop it.',
+    choices: [
+      ['Reply with the code so nobody else can use it.', 0, 'Never share a one-time code. It may let someone take over your account or phone number.'],
+      ['Use another phone to call your carrier using its official number, then contact your bank if needed.', 1, 'Correct. A carrier can check for an unauthorized number transfer, and your bank can protect exposed accounts.'],
+      ['Wait and keep trying password resets on the phone with no service.', 0, 'If your number was transferred, text-based reset codes may go to someone else. Use a trusted device and contact the carrier first.']
+    ] },
+  { title: 'A stranger took control of the phone',
+    story: 'After a surprise “support” call, you installed an app and shared its access code. The caller opened your settings and now the phone behaves strangely.',
+    choices: [
+      ['Open your banking app and change every password on that phone.', 0, 'Do not enter more sensitive information on a device you suspect is controlled. Use a different trusted device.'],
+      ['Stop using it for sensitive accounts, then use a trusted device to secure email and contact official support.', 1, 'Right. Secure the email account first, review active sessions, and get help from the device maker or a trusted technician.'],
+      ['Install the first “phone cleaner” advertised in a search result.', 0, 'Unknown cleaners can add risk. Get help through the device maker or a trusted professional.']
+    ] },
+  { title: 'A QR code asks for your password',
+    story: 'A sticker on a public payment machine covers the original instructions. Its QR code opens a page that asks you to sign in before paying.',
+    choices: [
+      ['Enter your password because the page has the company logo.', 0, 'Logos are easy to copy. The sticker may lead to a fake page.'],
+      ['Use the official app or the web address printed on the machine, and report the sticker.', 1, 'Good call. Reach the service through a channel you chose, not a potentially replaced QR code.'],
+      ['Scan it again with a different camera app.', 0, 'A different scanner does not make the destination trustworthy.']
+    ] }
+];
+let sceneNo = 0;
+const sceneWon = {};
+
+
+function drawScene() {
+  const x = SCENES[sceneNo];
+  $('#sbox').innerHTML = `<p class="mono">Scenario ${sceneNo + 1} of ${SCENES.length}</p><h3>${esc(x.title)}</h3><div class="msg">${esc(x.story)}</div>`
+    + x.choices.map((c, i) => `<button class="choice" data-c="${i}">${esc(c[0])}</button>`).join('')
+    + '<div id="sfb"></div>';
+}
+$('#scen').addEventListener('click', e => {
+  const b = e.target.closest('.choice');
+  if (!b) return;
+  const x = SCENES[sceneNo];
+  const c = x.choices[+b.dataset.c];
+  $$('#sbox .choice').forEach((el, i) => {
+    el.disabled = true;
+    if (x.choices[i][1]) el.classList.add('right');
+    else if (el === b) el.classList.add('wrong');
+  });
+  if (c[1]) {
+    sceneWon[sceneNo] = 1;
+    award('sc' + sceneNo, 10, 'good call');
+    if (Object.keys(sceneWon).length === SCENES.length) award('scenAll', 40, 'every scenario done');
+  }
+  const last = sceneNo === SCENES.length - 1;
+  const fbClass = c[1] ? 'ok' : 'no';
+  $('#sfb').innerHTML = `<div class="fb ${fbClass}"><b>${c[1] ? 'Good choice.' : 'Risky choice.'}</b> ${esc(c[2])}</div>
+    <button class="btn" id="sn" style="margin-top:10px">${last ? 'Start over' : 'Next scenario'}</button>`;
+  $('#sn').onclick = () => { sceneNo = last ? 0 : sceneNo + 1; drawScene(); };
+});
+
+
+// ---------- checklists ----------
+const CHECKS = {
+  all: [
+    ['Use a different password for email and banking', 'Email can reset every other account, so protect it most.'],
+    ['Turn on 2-step sign-in', "Even if someone gets your password they can't log in without the code. Never read that code out to anyone."],
+    ['Turn on automatic updates', 'Updates close security holes.'],
+    ['Never click links in messages you did not expect', 'Open the app or type the address yourself.'],
+    ['Freeze your credit (free in the U.S.)', 'Stops thieves from opening accounts in your name.'],
+    ['Back up your photos and files', "So ransomware can't hold them hostage."]
+  ],
+  senior: [
+    ['Pick a family safe word', 'Ask for it if a "relative" calls with an emergency.'],
+    ['Let unknown calls go to voicemail', 'Real callers leave a message.'],
+    ['Name someone to call before you send any money', 'Talk first, pay later.'],
+    ['Never pay with gift cards or wires to someone who contacted you', "Scammers pick these because they can't be reversed."]
+  ],
+  teen: [
+    ['Make your social accounts private', 'Limit who sees your posts and friends list.'],
+    ['Never share verification codes, even with friends', "Hijackers use your friends' trust."],
+    ['Be careful with "free" game currency or skins', 'Most are account-stealing scams.'],
+    ['Think before you send photos', 'Once they are sent you lose control of them.']
+  ],
+  work: [
+    ["Check the sender's real address, not just the name", 'Display names are easy to fake.'],
+    ['Confirm payment changes by phone', 'Use a number you already have, never one from the email.'],
+    ['Lock your screen when you step away', 'Takes a second, prevents a lot of trouble.'],
+    ['Use the company VPN on public Wi-Fi', 'Keeps work data off open networks.']
+  ]
+};
+const CHECK_GROUPS = [['all', 'Everyone'], ['senior', 'Older adults'], ['teen', 'Students'], ['work', 'Work']];
+let checkGroup = 'all';
+
+
+function drawChecklist() {
+  $('#cfilter').innerHTML = CHECK_GROUPS.map(g => `<button type="button" data-cf="${g[0]}" aria-pressed="${g[0] === checkGroup}">${esc(g[1])}</button>`).join('');
+  const items = checkGroup === 'all' ? CHECKS.all : CHECKS.all.slice(0, 3).concat(CHECKS[checkGroup]);
+  const done = items.filter((it, i) => S.ticks[checkGroup + i]).length;
+  $('#cprog').textContent = done + ' of ' + items.length + ' done';
+  $('#clist').innerHTML = items.map((it, i) => {
+    const key = checkGroup + i;
+    const isDone = S.ticks[key] ? 'done' : '';
+    const isChecked = S.ticks[key] ? 'checked' : '';
+    return `<label class="check ${isDone}"><input type="checkbox" data-ck="${key}" ${isChecked}><span><b>${esc(it[0])}</b><small>${esc(it[1])}</small></span></label>`;
+  }).join('');
+}
+$('#list').addEventListener('click', e => {
+  const f = e.target.closest('[data-cf]');
+  if (f) { checkGroup = f.dataset.cf; drawChecklist(); }
+});
+$('#list').addEventListener('change', e => {
+  const key = e.target.dataset.ck;
+  if (!key) return;
+  S.ticks[key] = e.target.checked;
+  saveData();
+  if (Object.values(S.ticks).filter(Boolean).length >= 5) award('checks5', 30, '5 protections done');
+  drawChecklist();
+});
+
+
+// ---------- security check-up ----------
+const CHECKUP = [
+  { id: 'pwmail', w: 3, q: 'My email password is different from my other passwords.', fix: 'Give your email its own long password. Email can reset every other account, so protect it first.' },
+  { id: 'tfaMail', w: 3, q: 'My email has 2-step sign-in turned on.', fix: 'Turn on 2-step sign-in in your email security settings. A stolen password alone then stops working.' },
+  { id: 'tfaBank', w: 3, q: 'My bank account has 2-step sign-in or alerts turned on.', fix: 'Switch on login and transaction alerts in your banking app, and 2-step sign-in if they offer it.' },
+  { id: 'pause', w: 3, q: 'I stop and check before sending money or codes to anyone who contacted me.', fix: 'Make it a rule: hang up and call back on a number you already know. Print a Pause Card for the phone.' },
+  { id: 'manager', w: 2, q: 'I use a password manager, or keep passwords somewhere safe at home.', fix: 'Try a password manager, or keep a notebook at home (not in your wallet).' },
+  { id: 'updates', w: 2, q: 'Automatic updates are on for my phone and computer.', fix: 'Search Settings for "update" and turn on automatic updates. They close security holes.' },
+  { id: 'lock', w: 2, q: 'My phone locks with a passcode, fingerprint or face.', fix: 'Set a screen lock so a lost phone is not a door into your accounts.' },
+  { id: 'word', w: 2, q: 'My family and I have a safe word for emergencies.', fix: 'Agree on a secret word. If a "relative" calls in trouble, ask for it before doing anything.' },
+  { id: 'freeze', w: 1, q: 'My credit is frozen, or I know how to freeze it.', fix: 'A credit freeze is free in the U.S. and stops new accounts in your name. Do it with all three credit bureaus.' },
+  { id: 'backup', w: 1, q: 'My photos and files are backed up somewhere else.', fix: 'Back up to the cloud or an external drive so ransomware can not hold your files hostage.' },
+  { id: 'wifi', w: 1, q: 'I avoid banking on public Wi-Fi.', fix: 'Use mobile data for anything sensitive when you are away from home.' }
+];
+
+
+function drawCheckup() {
+  $('#cuq').innerHTML = CHECKUP.map(c =>
+    `<fieldset class="q"><legend>${esc(c.q)}</legend>
+      <label><input type="radio" name="${c.id}" value="y" ${S.checkup[c.id] === 'y' ? 'checked' : ''}> Yes</label>
+      <label><input type="radio" name="${c.id}" value="n" ${S.checkup[c.id] === 'n' ? 'checked' : ''}> Not yet</label></fieldset>`
+  ).join('');
+  drawCheckupResult();
+}
+function drawCheckupResult() {
+  const answered = CHECKUP.filter(c => S.checkup[c.id]).length;
+  const yes = CHECKUP.filter(c => S.checkup[c.id] === 'y').length;
+  const todo = CHECKUP.filter(c => S.checkup[c.id] === 'n').sort((a, b) => b.w - a.w);
+  const out = $('#cuout');
+  if (!answered) { out.hidden = true; return; }
+  out.hidden = false;
+  let html = `<h2>${yes} of ${CHECKUP.length} habits in place</h2>`;
+  if (answered < CHECKUP.length) html += `<p>${CHECKUP.length - answered} questions left.</p>`;
+  if (todo.length) {
+    html += '<h3>Your to-do list</h3><ol>' + todo.map((c, i) => `<li style="margin:8px 0">${i < 3 ? '<b>Do this first:</b> ' : ''}${esc(c.fix)}</li>`).join('') + '</ol>';
+  } else if (answered === CHECKUP.length) {
+    html += '<p>Everything is covered. Nice.</p>';
+  }
+  out.innerHTML = html;
+  if (answered === CHECKUP.length) award('checkup', 30, 'check-up finished');
+}
+$('#cuq').addEventListener('change', e => {
+  if (!e.target.name) return;
+  S.checkup[e.target.name] = e.target.value;
+  saveData();
+  drawCheckupResult();
+});
+
+
+// ---------- if it already happened ----------
+const FIXES = [
+  { id: 'clicked', label: 'I clicked a link', steps: [
+    'Close the page. Do not type anything into it.',
+    'If a file downloaded, do not open it. Delete it and run your security scan.',
+    'If you typed a password or card number, also follow the "I typed my password" steps.',
+    'Restart the device and install any updates waiting.'] },
+  { id: 'password', label: 'I typed my password', steps: [
+    'Go to the real website (type the address yourself) and change that password now.',
+    'Change the same password anywhere else you used it.',
+    'Turn on 2-step sign-in for the account.',
+    'Look at recent activity and sign out of all other devices.',
+    'Watch for password reset emails you did not ask for.'] },
+  { id: 'code', label: 'I read out a code', steps: [
+    'Change the password for that account right away.',
+    "Sign out of every device from the account's security settings.",
+    'Check the recovery email and phone number are still yours.',
+    "Contact the service's real support through their official website."] },
+  { id: 'money', label: 'I sent money', steps: [
+    'Call your bank or card company now and ask them to stop or reverse the payment.',
+    'If you paid with a gift card, call the card company with the number and receipt. Moving fast can sometimes get it back.',
+    'Stop talking to the scammer. Do not send more "to fix it".',
+    'Write down names, numbers, dates and amounts.',
+    'Report it at reportfraud.ftc.gov. For online or crypto scams also use ic3.gov.'] },
+  { id: 'ssn', label: 'I gave my Social Security number', steps: [
+    'Freeze your credit at Equifax, Experian and TransUnion. It is free.',
+    'Go to identitytheft.gov and follow the recovery plan.',
+    'Check your credit reports at annualcreditreport.com.',
+    'Change passwords on accounts that use your personal details.',
+    'In the U.S., ask the IRS about an Identity Protection PIN.'] },
+  { id: 'remote', label: 'I let someone control my computer', steps: [
+    'Turn off Wi-Fi or unplug the network cable.',
+    'Uninstall the remote access program they had you install.',
+    'From a different, safe device, change your email and bank passwords.',
+    'Call your bank and tell them what happened.',
+    'Run a full security scan. If you are not sure it is clean, have a trusted repair shop reset it.'] },
+  { id: 'photos', label: 'Someone is threatening to share my photos', steps: [
+    'Do not pay and do not send more. Paying rarely makes it stop.',
+    'Stop replying. Keep screenshots of the messages and the account name.',
+    'Block them and report the account on the platform.',
+    'If you are under 18 or the photos were taken when you were, use takeitdown.ncmec.org to help get them removed.',
+    'Tell a trusted adult or friend. This is not your fault, and people can help.'] }
+];
+$('#pbpick').innerHTML = FIXES.map(p => `<button data-pb="${p.id}" aria-pressed="false" type="button">${esc(p.label)}</button>`).join('');
+
+
+$('#recovery').addEventListener('click', e => {   const b = e.target.closest('[data-pb]');   if (!b) return;   $$('#pbpick button').forEach(x => x.setAttribute('aria-pressed', x === b));
+  const p = FIXES.find(x => x.id === b.dataset.pb);
+  const out = $('#pbout');
+  out.hidden = false;
+  out.innerHTML = `<h3>${esc(p.label)}: do these in order</h3>`
+    + p.steps.map((s, i) => {
+      const key = p.id + i;
+      const isDone = S.steps[key] ? 'done' : '';
+      const isChecked = S.steps[key] ? 'checked' : '';
+      return `<label class="check ${isDone}"><input type="checkbox" data-pc="${key}" ${isChecked}><span><b>Step ${i + 1}.</b> ${esc(s)}</span></label>`;
+    }).join('')
+    + '<p style="margin-bottom:0">Tell someone you trust. Scammers count on embarrassment to keep you quiet.</p>';
+});
+$('#pbout').addEventListener('change', e => {
+  const key = e.target.dataset.pc;
+  if (!key) return;
+  S.steps[key] = e.target.checked;
+  saveData();
+  e.target.closest('.check').classList.toggle('done', e.target.checked);
+});
+
+
+// ---------- pause card ----------
+const CARD_FIELDS = { cdName: 'name', cdA: 'a', cdAp: 'ap', cdB: 'b', cdBp: 'bp', cdF: 'f' };
+
+
+function drawCardForm() {
+  const c = S.card || {};
+  for (const id in CARD_FIELDS) {
+    const el = $('#' + id);
+    if (document.activeElement !== el) el.value = c[CARD_FIELDS[id]] || '';
+  }
+  const pair = (n, p) => [n, p].filter(Boolean).join(' ') || '________';
+  $('#pcName').textContent = c.name ? ', ' + c.name : '';
+  $('#pcA').textContent = pair(c.a, c.ap);
+  $('#pcB').textContent = pair(c.b, c.bp);
+  $('#pcF').textContent = c.f || '________';
+}
+for (const id in CARD_FIELDS) {
+  $('#' + id).addEventListener('input', e => {
+    S.card[CARD_FIELDS[id]] = e.target.value;
+    saveData();
+    drawCardForm();
+    if (S.card.a && S.card.ap && S.card.f) award('card', 20, 'Pause card made');
+  });
+}
+$('#cdPrint').onclick = () => window.print();
+
+
+// ---------- scam calendar ----------
+const ALL_YEAR = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+const CALENDAR = [
+  { m: [1, 2, 3, 4], t: 'Tax refund and IRS calls', b: 'Calls and texts say you owe taxes or a refund is waiting. The IRS starts contact by mail and never demands gift cards or threatens arrest.' },
+  { m: [3, 4, 5, 6], t: 'Student aid and loan "forgiveness" fees', b: 'Companies charge fees to file the FAFSA or forgive loans. The FAFSA is free at studentaid.gov, and you never need to pay to apply for help.' },
+  { m: [4, 5, 6, 7, 8], t: 'Rental and vacation listings', b: 'Too-cheap rentals ask for a wired deposit before you can see the place. Pay by credit card and check the owner.' },
+  { m: [6, 7, 8, 9], t: 'Concert and event tickets', b: 'Fake sellers on social media take payment and vanish. Buy from the official seller or a site with buyer protection.' },
+  { m: [8, 9, 10], t: 'Scholarship and college fees', b: 'Real scholarships do not charge to apply or "guarantee" you win. Be careful with anyone asking for fees or bank details.' },
+  { m: [10, 11, 12], t: 'Medicare open enrollment calls', b: 'During fall enrollment, callers ask for your Medicare number to "update your card". Hang up and call Medicare on the number printed on your card.' },
+  { m: [11, 12], t: 'Package and gift card scams', b: "Fake delivery texts and \"buy me gift cards\" messages jump before the holidays. Track packages on the carrier's own website." },
+  { m: [11, 12, 1], t: 'Fake charities', b: 'Giving season brings look-alike charities. Search the charity by name on a rating site and give through its official website.' },
+  { m: ALL_YEAR, t: 'Romance and friendship scams', b: 'Someone online builds trust, then needs money for an emergency or an "investment". Never send money to someone you have not met.' },
+  { m: ALL_YEAR, t: 'Tech support and fake virus warnings', b: 'A pop-up or caller says you have a virus and wants access. Real companies do not call you about viruses.' }
+];
+function drawLookout() {
+  const month = new Date().getMonth() + 1;
+  const inSeason = x => x.m.includes(month) && x.m.length < 12;
+  const sorted = [...CALENDAR].sort((a, b) => (inSeason(b) ? 1 : 0) - (inSeason(a) ? 1 : 0));
+  $('#lookall').innerHTML = sorted.map(c => {
+    const now = inSeason(c);
+    return `<div class="season ${now ? 'now' : ''}">
+      <h3>${esc(c.t)} ${now ? '<span class="tag">Right now</span>' : ''}</h3>
+      <p style="margin:0">${esc(c.b)}</p>
+    </div>`;
+  }).join('');
+}
+
+
+// ---------- workshop log ----------
+const TOOLS = ['Spot the Phish', 'Link Inspector', 'Message Check', 'Password Lab', 'Scam or Safe?', 'What Would You Do?', 'Protect Yourself', 'Security Check-up', 'Pause Card'];
+$('#lgTool').innerHTML = TOOLS.map(t => `<option>${esc(t)}</option>`).join('');
+$('#lgDate').valueAsDate = new Date();
+
+
+$('#logForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const entry = {
+    date: $('#lgDate').value,
+    group: $('#lgGroup').value,
+    dev: $('#lgDev').value,
+    tool: $('#lgTool').value,
+    ease: $('#lgEase').value,
+    stuck: $('#lgStuck').value.trim(),
+    fix: $('#lgFix').value.trim()
+  };
+  S.log.unshift(entry);
+  saveData();
+  $('#lgStuck').value = $('#lgFix').value = '';
+  drawLog();
+  toast('Added to workshop log');
+  if (S.log.length >= 3) award('teach', 30, '3 workshop logs recorded');
+});
+
+
+function drawLog() {
+  const out = $('#logout');
+  if (!S.log.length) { out.innerHTML = '<p style="color:var(--muted)">No entries yet.</p>'; return; }
+  out.innerHTML = `<table><tr><th>Date</th><th>Group</th><th>Tool</th><th>Ease</th><th>Stuck / Fix</th></tr>`
+    + S.log.map((l, i) => `<tr>
+      <td>${esc(l.date)}</td>
+      <td>${esc(l.group)}</td>
+      <td>${esc(l.tool)}</td>
+      <td>${l.ease}/5</td>
+      <td><b>Stuck:</b> ${esc(l.stuck || '-')}<br><b>Change:</b> ${esc(l.fix || '-')}</td>
+    </tr>`).join('') + `</table>`;
+}
+
+
+// ---------- glossary ----------
+const GLOSSARY = [
+  ['Phishing', 'Fraudulent messages (emails, texts) designed to trick you into revealing passwords, card numbers, or personal info.'],
+  ['Spoofing', 'Faking an email address, phone caller ID, or website domain to make it look like it comes from a trusted organization.'],
+  ['Social Engineering', 'Psychological manipulation used by cybercriminals to trick people into breaking security procedures.'],
+  ['Two-Step Verification (2FA / MFA)', 'A security process where a user provides two distinct authentication factors to verify themselves (e.g., password plus a code sent to your phone).'],
+  ['Ransomware', 'Malicious software that blocks access to your computer files until a sum of money (ransom) is paid.'],
+  ['Pig Butchering', 'A long-term investment scam (often crypto-based) where fraudsters build fake romantic or friendly rapport before convincing victims to invest.'],
+  ['Business Email Fraud (BEC)', 'A scam targeting businesses working with foreign suppliers, involving compromise of legitimate email accounts to conduct unauthorized wire transfers.'],
+  ['Credential Stuffing', 'An automated cyberattack where stolen account credentials (usernames and passwords) are used to gain unauthorized access to user accounts on other websites.']
+];
+
+
+function drawGlossary(filter = '') {
+  const q = filter.trim().toLowerCase();
+  const list = q ? GLOSSARY.filter(g => g[0].toLowerCase().includes(q) || g[1].toLowerCase().includes(q)) : GLOSSARY;
+  $('#gloss').innerHTML = list.length
+    ? list.map(([w, d]) => `<dt>${esc(w)}</dt><dd>${esc(d)}</dd>`).join('')
+    : '<dt>No matches</dt><dd>Try a different search word.</dd>';
+}
+$('#gsearch').addEventListener('input', e => drawGlossary(e.target.value));
+drawGlossary();
+
+
+// ---------- account page ----------
+function drawProfilePhoto() {
+  const image = $('#profileAvatarImg');
+  const initials = $('#profileAvatarInitials');
+  image.hidden = !hasProfilePhoto;
+  initials.hidden = hasProfilePhoto;
+  $('#removeProfilePhoto').hidden = !hasProfilePhoto;
+  const name = $('#profileDisplayName').value.trim() || me || 'ScamSafe';
+  initials.textContent = name.split(/\s+/).slice(0, 2).map(part => part[0]).join('').toUpperCase();
+}
+
+
+async function loadProfilePhoto() {
+  if (!activeSupabaseUser) return;
+  const supabase = await getSupabase();
+  const path = activeSupabaseUser.id + '/avatar.jpg';
+  const { data, error } = await supabase.storage.from('profile-photos').createSignedUrl(path, 3600);
+  hasProfilePhoto = !error && !!data?.signedUrl;
+  drawProfilePhoto();
+  if (hasProfilePhoto) $('#profileAvatarImg').src = data.signedUrl;
+  else $('#profileAvatarImg').removeAttribute('src');
+}
+
+
+function drawAccount() {
+  if (!me) return;
+  const metadata = activeSupabaseUser?.user_metadata || {};
+  const displayName = localProfile.display_name || metadata.display_name || me;
+  $('#acctName').textContent = displayName + "'s profile";
+  const dateStr = new Date(S.joined || Date.now()).toLocaleDateString();
+  const badgesEarned = STAMPS.filter(badge => S.got[badge[0]]).length;
+  $('#acctInfo').innerHTML = `
+    <p><b>Username:</b> ${esc(me)}</p>
+    <p><b>Email:</b> ${esc(accountEmail)}</p>
+    <p><b>Member since:</b> ${dateStr}</p>
+    <p><b>Level:</b> ${LEVELS[levelNow()]} (Level ${levelNow() + 1})</p>
+    <p><b>Total XP:</b> ${S.xp} XP</p>
+    <p><b>Badges Earned:</b> ${badgesEarned} / ${STAMPS.length}</p>
+  `;
+  $('#profileDisplayName').value = displayName;
+  $('#profilePhone').value = metadata.phone_number || '';
+  $('#profileBio').value = localProfile.bio || metadata.bio || '';
+  $('#profileAgeGroup').value = metadata.age_group || 'prefer_not_to_say';
+  $('#profileGender').value = metadata.gender || 'prefer_not_to_say';
+  $('#profileStatus').textContent = '';
+  $('#importProgressBtn').hidden = !store.get('cc_unimported_progress_' + activeSupabaseUser.id);
+  drawProfilePhoto();
+  loadProfilePhoto().catch(() => { hasProfilePhoto = false; drawProfilePhoto(); });
+}
+
+$('#importProgressBtn').addEventListener('click', async () => {
+  if (!activeSupabaseUser || !me) return;
+  const key = 'cc_unimported_progress_' + activeSupabaseUser.id;
+  const saved = getJSON(key, null);
+  if (!saved || !window.confirm('Merge this browser’s saved progress into your account? This will combine XP, badges, lesson answers, and workshop entries.')) return;
+  S = mergeProgress(S, saved);
+  store.del(key);
+  store.set('cc_data_' + me, JSON.stringify(S));
+  refreshAll();
+  try {
+    await syncProgressNow();
+    toast('Browser progress imported and synced.');
+  } catch (error) {
+    toast('Progress is saved in this browser, but cloud sync failed: ' + (error.message || 'Check Supabase setup.'));
+  }
+});
+
+
+$('#profileForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  if (!activeSupabaseUser) return;
+  const displayName = $('#profileDisplayName').value.trim();
+  const phoneNumber = $('#profilePhone').value.trim();
+  const bio = $('#profileBio').value.trim();
+  if (!displayName) { $('#profileStatus').textContent = 'Add a display name first.'; return; }
+  const phoneDigits = phoneNumber.replace(/\D/g, '');
+  if (phoneNumber && (!/^\+?[0-9\s().-]{7,25}$/.test(phoneNumber) || phoneDigits.length < 7 || phoneDigits.length > 15)) {
+    $('#profileStatus').textContent = 'Enter a valid phone number or leave the phone field blank.';
+    return;
+  }
+  const saveButton = $('#saveProfile');
+  saveButton.disabled = true;
+  saveButton.textContent = 'Saving...';
+  try {
+    const metadata = {
+      ...activeSupabaseUser.user_metadata,
+      display_name: displayName,
+      phone_number: phoneNumber,
+      bio,
+      age_group: $('#profileAgeGroup').value,
+      gender: $('#profileGender').value
+    };
+    const supabase = await getSupabase();
+    const { data, error } = await supabase.auth.updateUser({ data: metadata });
+    if (error) throw error;
+    if (data.user) activeSupabaseUser = data.user;
+    localProfile.display_name = displayName;
+    localProfile.bio = bio;
+    store.set('cc_profile_' + me, JSON.stringify(localProfile));
+    drawAccount();
+    $('#profileStatus').textContent = 'Profile saved to your account.';
+  } catch (error) {
+    $('#profileStatus').textContent = error.message || 'Could not save your profile. Try again.';
+  } finally {
+    saveButton.disabled = false;
+    saveButton.textContent = 'Save profile';
+  }
+});
+
+
+function resizeProfilePhoto(file) {
+  return new Promise((resolve, reject) => {
+    if (!file || !file.type.startsWith('image/')) { reject(new Error('Choose an image file.')); return; }
+    if (file.size > 12 * 1024 * 1024) { reject(new Error('Choose an image smaller than 12 MB.')); return; }
+    const url = URL.createObjectURL(file);
+    const image = new Image();
+    image.onload = () => {
+      const scale = Math.min(320 / image.width, 320 / image.height, 1);
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, Math.round(image.width * scale));
+      canvas.height = Math.max(1, Math.round(image.height * scale));
+      canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
+      URL.revokeObjectURL(url);
+      canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('Could not process that image. Try a different photo.')), 'image/jpeg', .78);
+    };
+    image.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Could not open that image.')); };
+    image.src = url;
+  });
+}
+
+
+$('#profilePhoto').addEventListener('change', async e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const status = $('#profileStatus');
+  const uploadButton = $('label[for="profilePhoto"]');
+  uploadButton.setAttribute('aria-disabled', 'true');
+  status.textContent = 'Preparing photo...';
+  try {
+    const photo = await resizeProfilePhoto(file);
+    const supabase = await getSupabase();
+    const path = activeSupabaseUser.id + '/avatar.jpg';
+    const { error } = await supabase.storage.from('profile-photos').upload(path, photo, {
+      upsert: true,
+      contentType: 'image/jpeg',
+      cacheControl: '3600'
+    });
+    if (error) throw error;
+    await loadProfilePhoto();
+    status.textContent = 'Profile photo uploaded to your private account storage.';
+  } catch (error) {
+    status.textContent = error.message || 'Could not upload photo. Check the profile-photos bucket and its policies.';
+  } finally {
+    uploadButton.removeAttribute('aria-disabled');
+    e.target.value = '';
+  }
+});
+
+
+$('#removeProfilePhoto').addEventListener('click', async () => {
+  const button = $('#removeProfilePhoto');
+  button.disabled = true;
+  try {
+    const supabase = await getSupabase();
+    const { error } = await supabase.storage.from('profile-photos').remove([activeSupabaseUser.id + '/avatar.jpg']);
+    if (error) throw error;
+    hasProfilePhoto = false;
+    drawProfilePhoto();
+    $('#profileStatus').textContent = 'Profile photo removed from Supabase Storage.';
+  } catch (error) {
+    $('#profileStatus').textContent = error.message || 'Could not remove the photo.';
+  } finally {
+    button.disabled = false;
+  }
+});
+$('#logoutBtn').onclick = logOut;
+
+
+// ---------- init ----------
+refreshAll();
+drawEmail();
+drawLink();
+startQuiz();
+drawScene();
+route();
+restoreSupabaseSession();
+</script>
+</body>
+</html>
